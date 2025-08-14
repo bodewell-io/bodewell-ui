@@ -7,15 +7,8 @@ import 'ag-grid-community/styles/ag-grid.css'; // <-- ADD THIS LINE
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // <-- ADD THIS LINE
 import { 
   type ColDef, 
-  type GridOptions, 
-  ModuleRegistry, 
-  ClientSideRowModelModule 
+  type GridOptions
 } from 'ag-grid-community';
-
-// Register ONLY the required AG Grid Community modules
-ModuleRegistry.registerModules([
-  ClientSideRowModelModule,
-]);
 
 export interface DataTableProps {
   rowData: any[];
