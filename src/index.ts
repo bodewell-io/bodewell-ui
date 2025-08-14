@@ -7,6 +7,8 @@ import './index.css';
 export type * from './types/wizard.d';
 export type { ThemeName } from './contexts/ThemeContext';
 export type { MultiSelectOption } from './form/MultiSelect';
+export type { ColDef, GridOptions } from 'ag-grid-community';
+
 
 // 3. Export all components, hooks, and utilities
 
