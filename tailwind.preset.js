@@ -29,6 +29,10 @@ module.exports = {
           DEFAULT: 'var(--app-accent-color)',
           foreground: 'var(--app-accent-foreground-color)',
         },
+        card: { // <-- THIS IS THE FIX
+          DEFAULT: 'var(--app-card-bg-color)',
+          foreground: 'var(--app-text-color)',
+        },
       },
       fontFamily: {
         sans: ['var(--app-font-sans)'],

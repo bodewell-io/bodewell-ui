@@ -1,6 +1,6 @@
 {
   "name": "@bodewell/ui",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": false,
   "description": "A designer-centric prototyping framework with a pre-built component library.",
   "main": "./dist/bodewell-ui.umd.js",
