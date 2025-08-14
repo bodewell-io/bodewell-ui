@@ -1,4 +1,6 @@
 import React from 'react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { type ColDef, type GridOptions } from 'ag-grid-community';
 export interface DataTableProps {
     rowData: any[];
