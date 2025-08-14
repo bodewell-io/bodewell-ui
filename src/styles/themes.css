@@ -1,0 +1,211 @@
+/* src/styles/themes.css */
+
+/* --- Theme Definitions (Classes applied to document.documentElement) --- */
+
+/* Light Theme (Default for the system if no dark preference) */
+.light {
+  /* Font Variables */
+  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+
+  /* Color Variables */
+  --app-primary-color: rgb(37, 99, 235);
+  --app-primary-foreground-color: rgb(255, 255, 255);
+  --app-secondary-color: rgb(249, 115, 22);
+  --app-secondary-foreground-color: rgb(255, 255, 255);
+  --app-accent-color: rgb(102, 126, 234);
+  --app-accent-foreground-color: rgb(255, 255, 255);
+  --app-text-color: rgb(31, 41, 55);
+  --app-bg-color: rgb(243, 244, 246);
+  --app-card-bg-color: rgb(255, 255, 255);
+  --app-border-color: rgb(229, 231, 235);
+  --app-bg-color-hover: rgb(240, 240, 240);
+  --app-danger-color: 220, 38, 38;        /* red-600 */
+  --app-danger-foreground-color: rgb(240, 240, 240); /* white */
+  
+
+
+  /* Raw RGB values for Tailwind CSS opacity modifiers */
+  --app-primary-color-raw: 37, 99, 235;
+  --app-primary-foreground-color-raw: 255, 255, 255;
+  --app-secondary-color-raw: 249, 115, 22;
+  --app-secondary-foreground-color-raw: 255, 255, 255;
+  --app-accent-color-raw: 102, 126, 234;
+  --app-accent-foreground-color-raw: 255, 255, 255;
+  --app-text-color-raw: 31, 41, 55;
+  --app-bg-color-raw: 243, 244, 246;
+  --app-card-bg-color-raw: 255, 255, 255;
+  --app-border-color-raw: 229, 231, 235;
+  --app-bg-color-hover-raw: 255, 255, 255;
+  --app-danger-color-raw: 220, 38, 38;
+  --app-danger-foreground-color-raw: 255, 255, 255;
+}
+
+/* Dark Theme */
+.dark {
+  /* Font Variables */
+  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+
+  /* Color Variables */
+  --app-primary-color: rgb(96, 165, 250);
+  --app-primary-foreground-color: rgb(17, 24, 39);
+  --app-secondary-color: rgb(251, 146, 60);
+  --app-secondary-foreground-color: rgb(17, 24, 39);
+  --app-accent-color: rgb(129, 140, 248);
+  --app-accent-foreground-color: rgb(17, 24, 39);
+  --app-text-color: rgb(209, 213, 219);
+  --app-bg-color: rgb(17, 24, 39);
+  --app-card-bg-color: rgb(31, 41, 55);
+  --app-border-color: rgb(55, 65, 81);
+  --app-bg-color-hover: rgb(42, 42, 42);
+  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
+  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
+
+  /* Raw RGB values for Tailwind CSS opacity modifiers */
+  --app-primary-color-raw: 96, 165, 250;
+  --app-primary-foreground-color-raw: 17, 24, 39;
+  --app-secondary-color-raw: 251, 146, 60;
+  --app-secondary-foreground-color-raw: 17, 24, 39;
+  --app-accent-color-raw: 129, 140, 248;
+  --app-accent-foreground-color-raw: 17, 24, 39;
+  --app-text-color-raw: 209, 213, 219;
+  --app-bg-color-raw: 17, 24, 39;
+  --app-card-bg-color-raw: 31, 41, 55;
+  --app-border-color-raw: 55, 65, 81;
+  --app-bg-color-hover-raw: 42, 42, 42;
+  --app-danger-color-raw: 220, 38, 38;
+  --app-danger-foreground-color-raw: 255, 255, 255;
+}
+
+/* Corporate Theme */
+.corporate {
+  /* Font Variables */
+  --app-font-sans: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: 'Merriweather', Georgia, Cambria, 'Times New Roman', Times, serif;
+  
+  /* Color Variables */
+  --app-primary-color: rgb(16, 185, 129);
+  --app-primary-foreground-color: rgb(255, 255, 255);
+  --app-secondary-color: rgb(252, 211, 77);
+  --app-secondary-foreground-color: rgb(55, 65, 81);
+  --app-accent-color: rgb(110, 231, 183);
+  --app-accent-foreground-color: rgb(55, 65, 81);
+  --app-text-color: rgb(55, 65, 81);
+  --app-bg-color: rgb(249, 250, 251);
+  --app-card-bg-color: rgb(255, 255, 255);
+  --app-border-color: rgb(209, 213, 219);
+  --app-bg-color-hover: rgb(210, 210, 210);
+  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
+  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
+
+  /* Raw RGB values for Tailwind CSS opacity modifiers */
+  --app-primary-color-raw: 16, 185, 129;
+  --app-primary-foreground-color-raw: 255, 255, 255;
+  --app-secondary-color-raw: 252, 211, 77;
+  --app-secondary-foreground-color-raw: 55, 65, 81;
+  --app-accent-color-raw: 110, 231, 183;
+  --app-accent-foreground-color-raw: 55, 65, 81;
+  --app-text-color-raw: 55, 65, 81;
+  --app-bg-color-raw: 249, 250, 251;
+  --app-card-bg-color-raw: 255, 255, 255;
+  --app-border-color-raw: 209, 213, 219;
+  --app-bg-color-hover-raw: 210, 210, 210;
+  --app-danger-color-raw: 220, 38, 38;
+  --app-danger-foreground-color-raw: 255, 255, 255;
+}
+
+/* Midnight Theme */
+.midnight {
+  /* Font Variables */
+  --app-font-sans: 'Roboto Mono', monospace;
+  --app-font-serif: 'Lora', serif;
+
+  /* Color Variables */
+  --app-primary-color: rgb(129, 140, 248);
+  --app-primary-foreground-color: rgb(255, 255, 255);
+  --app-secondary-color: rgb(192, 132, 252);
+  --app-secondary-foreground-color: rgb(15, 23, 42);
+  --app-accent-color: rgb(99, 102, 241);
+  --app-accent-foreground-color: rgb(255, 255, 255);
+  --app-text-color: rgb(226, 232, 240);
+  --app-bg-color: rgb(15, 23, 42);
+  --app-card-bg-color: rgb(30, 41, 59);
+  --app-border-color: rgb(71, 85, 105);
+  --app-bg-color-hover: rgb(42, 42, 42);
+  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
+  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
+
+  /* Raw RGB values for Tailwind CSS opacity modifiers */
+  --app-primary-color-raw: 129, 140, 248;
+  --app-primary-foreground-color-raw: 255, 255, 255;
+  --app-secondary-color-raw: 192, 132, 252;
+  --app-secondary-foreground-color-raw: 15, 23, 42;
+  --app-accent-color-raw: 99, 102, 241;
+  --app-accent-foreground-color-raw: 255, 255, 255;
+  --app-text-color-raw: 226, 232, 240;
+  --app-bg-color-raw: 15, 23, 42;
+  --app-card-bg-color-raw: 30, 41, 59;
+  --app-border-color-raw: 71, 85, 105;
+  --app-bg-color-hover-raw: 42, 42, 42;
+  --app-danger-color-raw: 220, 38, 38;
+  --app-danger-foreground-color-raw: 255, 255, 255;
+}
+
+/* Blueprint Theme */
+.blueprint {
+  /* Font Variables */
+  --app-font-sans: 'Courier New', Courier, monospace;
+  --app-font-serif: 'Times New Roman', Times, serif;
+
+  /* Color Variables */
+  --app-primary-color: rgb(51, 51, 51);
+  --app-primary-foreground-color: rgb(255, 255, 255);
+  --app-secondary-color: rgb(125, 125, 125);
+  --app-secondary-foreground-color: rgb(255, 255, 255);
+  --app-accent-color: rgb(0, 0, 0);
+  --app-accent-foreground-color: rgb(255, 255, 255);
+  --app-text-color: rgb(0, 0, 0);
+  --app-bg-color: rgb(255, 255, 255);
+  --app-card-bg-color: rgb(255, 255, 255);
+  --app-border-color: rgb(194, 194, 194);
+  --app-bg-color-hover: rgb(230, 230, 230);
+  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
+  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
+
+  /* Raw RGB values for Tailwind CSS opacity modifiers */
+  --app-primary-color-raw: 51, 51, 51;
+  --app-primary-foreground-color-raw: 255, 255, 255;
+  --app-secondary-color-raw: 125, 125, 125;
+  --app-secondary-foreground-color-raw: 255, 255, 255;
+  --app-accent-color-raw: 0, 0, 0;
+  --app-accent-foreground-color-raw: 255, 255, 255;
+  --app-text-color-raw: 0, 0, 0;
+  --app-bg-color-raw: 255, 255, 255;
+  --app-card-bg-color-raw: 255, 255, 255;
+  --app-border-color-raw: 194, 194, 194;
+  --app-bg-color-hover-raw: 230, 230, 230;
+  --app-danger-color-raw: 220, 38, 38;
+  --app-danger-foreground-color-raw: 255, 255, 255;
+}
+
+
+/* --- AG Grid Theme Overrides (Now fully dynamic) --- */
+
+:root .ag-theme-quartz {
+  --ag-foreground-color: var(--app-text-color);
+  --ag-background-color: var(--app-card-bg-color);
+  --ag-header-background-color: var(--app-bg-color);
+  --ag-odd-row-background-color: var(--app-bg-color);
+  --ag-even-row-background-color: var(--app-card-bg-color);
+  --ag-border-color: var(--app-border-color);
+  --ag-row-hover-color: var(--app-bg-color-hover);
+  
+  /* Link selected colors to theme colors */
+  --ag-selected-row-background-color: var(--app-primary-color);
+  --ag-selected-row-foreground-color: var(--app-primary-foreground-color);
+  --ag-active-color: var(--app-accent-color);
+
+  /* Use -raw variables for colors with opacity */
+  --ag-range-selection-background-color: rgba(var(--app-primary-color-raw), 0.2);
+}

@@ -1,0 +1,40 @@
+// packages/ui/src/styles/ag-grid-theme.scss
+@use 'ag-grid-community/styles' as ag;
+
+// A map of theme properties using the correct CSS variables from your old project
+$custom-theme-params: (
+  // General
+  font-family: var(--font-family-sans), // Assuming a standard font variable
+  font-size: 14px,
+  foreground-color: var(--app-text-color),
+  background-color: var(--app-card-bg-color),
+  secondary-foreground-color: var(--app-text-color), // Or a lighter variant if you have one
+  
+  // Borders
+  border-color: var(--app-border-color),
+  secondary-border-color: var(--app-border-color),
+  
+  // Header
+  header-background-color: var(--app-bg-color),
+  header-foreground-color: var(--app-text-color),
+  
+  // Rows
+  odd-row-background-color: var(--app-bg-color),
+  row-hover-color: var(--app-bg-color-hover),
+  selected-row-background-color: var(--app-primary-color),
+  
+  // Inputs & Controls
+  input-background-color: var(--app-card-bg-color), // Or a specific input color
+  input-border-color: var(--app-border-color),
+  range-selection-background-color: var(--app-primary-color)
+);
+
+// Include the AG Grid theme with our custom parameters
+.ag-theme-fanta {
+  @include ag.grid-styles(
+    (
+      theme: quartz,
+      params: $custom-theme-params
+    )
+  );
+}
