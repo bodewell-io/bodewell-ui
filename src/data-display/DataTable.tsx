@@ -3,6 +3,8 @@
 
 import React, { useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css'; // <-- ADD THIS LINE
+import 'ag-grid-community/styles/ag-theme-quartz.css'; // <-- ADD THIS LINE
 import { 
   type ColDef, 
   type GridOptions, 
