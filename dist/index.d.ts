@@ -2,6 +2,7 @@ import './index.css';
 export type * from './types/wizard.d';
 export type { ThemeName } from './contexts/ThemeContext';
 export type { MultiSelectOption } from './form/MultiSelect';
+export type { ColDef, GridOptions } from 'ag-grid-community';
 export * from './charts/BarChart';
 export * from './charts/ChartWithTable';
 export * from './charts/LineChart';
