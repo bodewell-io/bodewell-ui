@@ -190,22 +190,198 @@
 }
 
 
-/* --- AG Grid Theme Overrides (Now fully dynamic) --- */
+/* --- AG Grid Theme Overrides --- */
+/* This targets the "ag-theme-quartz" class used in our DataTable component */
+/* and overrides its default CSS variables with our own application theme variables. */
 
 :root .ag-theme-quartz {
-  --ag-foreground-color: var(--app-text-color);
+  /* General */
+  --ag-font-family: var(--app-font-sans);
+  --ag-font-size: 14px;
   --ag-background-color: var(--app-card-bg-color);
+  --ag-foreground-color: var(--app-text-color);
+  
+  /* Borders */
+  --ag-border-color: var(--app-border-color);
+  --ag-secondary-border-color: var(--app-border-color);
+
+  /* Header */
   --ag-header-background-color: var(--app-bg-color);
+  --ag-header-foreground-color: var(--app-text-color);
+  
+  /* Rows */
   --ag-odd-row-background-color: var(--app-bg-color);
   --ag-even-row-background-color: var(--app-card-bg-color);
-  --ag-border-color: var(--app-border-color);
   --ag-row-hover-color: var(--app-bg-color-hover);
   
-  /* Link selected colors to theme colors */
+  /* Interactivity */
   --ag-selected-row-background-color: var(--app-primary-color);
   --ag-selected-row-foreground-color: var(--app-primary-foreground-color);
+  --ag-range-selection-background-color: rgba(var(--app-primary-color-raw), 0.2);
   --ag-active-color: var(--app-accent-color);
 
-  /* Use -raw variables for colors with opacity */
-  --ag-range-selection-background-color: rgba(var(--app-primary-color-raw), 0.2);
+}
+
+
+/* Custom Tippy.js theme to match the Fanta Frontend design system.
+  This file should be imported into your main CSS entry point.
+*/
+
+.tippy-box[data-theme~='fanta'] {
+  background-color: var(--app-primary-color);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  /* Use a filter for a cleaner shadow that includes the arrow */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.tippy-box[data-theme~='fanta'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: var(--app-primary-color);
+}
+.tippy-box[data-theme~='fanta'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: var(--app-primary-color);
+}
+.tippy-box[data-theme~='fanta'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: var(--app-primary-color);
+}
+.tippy-box[data-theme~='fanta'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: var(--app-primary-color);
+}
+
+.tippy-content {
+  padding: 0.5rem 0.75rem;
+}
+
+
+
+/* --- Custom React Datepicker Theme --- */
+
+.react-datepicker {
+  background-color: var(--app-card-bg-color);
+  border-color: var(--app-border-color);
+  color: var(--app-text-color);
+}
+
+.react-datepicker__header {
+  background-color: var(--app-bg-color);
+  border-bottom-color: var(--app-border-color);
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header,
+.react-datepicker-month-header,
+.react-datepicker__day-name {
+  color: var(--app-text-color);
+}
+
+.react-datepicker__day {
+  color: var(--app-text-color);
+}
+
+.react-datepicker__day:hover {
+  background-color: rgba(var(--app-primary-color-raw), 0.1);
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  background-color: var(--app-primary-color);
+  color: white;
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--in-range:hover {
+  background-color: var(--app-primary-color);
+}
+
+.react-datepicker__day--disabled {
+  color: rgba(var(--app-text-color-raw), 0.5);
+}
+
+/* Styles for the portal/popper */
+.react-datepicker-portal-light .react-datepicker__day--selected,
+.react-datepicker-portal-light .react-datepicker__day--keyboard-selected {
+  background-color: var(--app-primary-color);
+  color: white;
+}
+
+.react-datepicker-portal-dark .react-datepicker,
+.react-datepicker-portal-corporate .react-datepicker,
+.react-datepicker-portal-midnight .react-datepicker {
+  background-color: var(--app-card-bg-color);
+  border-color: var(--app-border-color);
+}
+
+.react-datepicker-portal-dark .react-datepicker__header,
+.react-datepicker-portal-corporate .react-datepicker__header,
+.react-datepicker-portal-midnight .react-datepicker__header {
+  background-color: var(--app-bg-color);
+  border-bottom-color: var(--app-border-color);
+}
+
+.react-datepicker-portal-dark .react-datepicker__current-month,
+.react-datepicker-portal-dark .react-datepicker-time__header,
+.react-datepicker-portal-dark .react-datepicker-year-header,
+.react-datepicker-portal-dark .react-datepicker-month-header,
+.react-datepicker-portal-dark .react-datepicker__day-name,
+.react-datepicker-portal-corporate .react-datepicker__current-month,
+.react-datepicker-portal-corporate .react-datepicker-time__header,
+.react-datepicker-portal-corporate .react-datepicker-year-header,
+.react-datepicker-portal-corporate .react-datepicker-month-header,
+.react-datepicker-portal-corporate .react-datepicker__day-name,
+.react-datepicker-portal-midnight .react-datepicker__current-month,
+.react-datepicker-portal-midnight .react-datepicker-time__header,
+.react-datepicker-portal-midnight .react-datepicker-year-header,
+.react-datepicker-portal-midnight .react-datepicker-month-header,
+.react-datepicker-portal-midnight .react-datepicker__day-name {
+  color: var(--app-text-color);
+}
+
+.react-datepicker-portal-dark .react-datepicker__day,
+.react-datepicker-portal-corporate .react-datepicker__day,
+.react-datepicker-portal-midnight .react-datepicker__day {
+  color: var(--app-text-color);
+}
+
+.react-datepicker-portal-dark .react-datepicker__day:hover,
+.react-datepicker-portal-corporate .react-datepicker__day:hover,
+.react-datepicker-portal-midnight .react-datepicker__day:hover {
+  background-color: rgba(var(--app-primary-color-raw), 0.1);
+}
+
+.react-datepicker-portal-dark .react-datepicker__day--selected,
+.react-datepicker-portal-dark .react-datepicker__day--keyboard-selected,
+.react-datepicker-portal-dark .react-datepicker__day--in-selecting-range,
+.react-datepicker-portal-dark .react-datepicker__day--in-range,
+.react-datepicker-portal-corporate .react-datepicker__day--selected,
+.react-datepicker-portal-corporate .react-datepicker__day--keyboard-selected,
+.react-datepicker-portal-corporate .react-datepicker__day--in-selecting-range,
+.react-datepicker-portal-corporate .react-datepicker__day--in-range,
+.react-datepicker-portal-midnight .react-datepicker__day--selected,
+.react-datepicker-portal-midnight .react-datepicker__day--keyboard-selected,
+.react-datepicker-portal-midnight .react-datepicker__day--in-selecting-range,
+.react-datepicker-portal-midnight .react-datepicker__day--in-range {
+  background-color: var(--app-primary-color);
+  color: white;
+}
+
+.react-datepicker-portal-dark .react-datepicker__day--selected:hover,
+.react-datepicker-portal-dark .react-datepicker__day--keyboard-selected:hover,
+.react-datepicker-portal-dark .react-datepicker__day--in-selecting-range:hover,
+.react-datepicker-portal-dark .react-datepicker__day--in-range:hover,
+.react-datepicker-portal-corporate .react-datepicker__day--selected:hover,
+.react-datepicker-portal-corporate .react-datepicker__day--keyboard-selected:hover,
+.react-datepicker-portal-corporate .react-datepicker__day--in-selecting-range:hover,
+.react-datepicker-portal-corporate .react-datepicker__day--in-range:hover,
+.react-datepicker-portal-midnight .react-datepicker__day--selected:hover,
+.react-datepicker-portal-midnight .react-datepicker__day--keyboard-selected:hover,
+.react-datepicker-portal-midnight .react-datepicker__day--in-selecting-range:hover,
+.react-datepicker-portal-midnight .react-datepicker__day--in-range:hover {
+  background-color: var(--app-primary-color);
 }

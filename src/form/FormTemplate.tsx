@@ -1,12 +1,12 @@
 // src/components/templates-patterns/FormTemplate.tsx
 import React, { useState } from 'react';
 import { Button } from '../ui/Button';
-import { Input } from '../form/Input';
-import { Select } from '../form/Select';
-import { Checkbox } from '../form/Checkbox';
-import { Radio } from '../form/Radio';
+import { Input } from './Input';
+import { Select } from './Select';
+import { Checkbox } from './Checkbox';
+import { Radio } from './Radio';
 import { Card } from '../layout/Card';
-import { SectionHeader } from './SectionHeader';
+import { SectionHeader } from '../templates-patterns/SectionHeader';
 import { ActionBar } from '../templates-patterns/ActionBar';
 
 // Define common props for a form field

@@ -1,8 +1,27 @@
-//import { ButtonGroup } from './form/ButtonGroup';
+// src/index.ts
 
-export * from './wizardManifest';
+// 1. Import the master stylesheet for the entire library
+import './index.css';
 
+// 2. Export all types for consumers
 export type * from './types/wizard.d';
+export type { ThemeName } from './contexts/ThemeContext';
+export type { MultiSelectOption } from './form/MultiSelect';
+
+// 3. Export all components, hooks, and utilities
+
+// charts
+export * from './charts/BarChart';
+export * from './charts/ChartWithTable';
+export * from './charts/LineChart';
+export * from './charts/PieChart';
+
+// contexts
+export * from './contexts/ThemeContext';
+
+// data-display
+export * from './data-display/DataTable';
+export * from './data-display/Table';
 
 // feedback
 export * from './feedback/Alert';
@@ -11,62 +30,49 @@ export * from './feedback/TippyTooltip';
 export * from './feedback/Toast';
 export * from './feedback/ToastProvider';
 
+// form
+export * from './form/ButtonGroup';
+export * from './form/Checkbox';
+export * from './form/ComboBox';
+export * from './form/DatePicker';
+export * from './form/FileUpload';
+export * from './form/FormTemplate';
+export * from './form/Input';
+export * from './form/MultiSelect';
+export * from './form/Radio';
+export * from './form/SearchInput';
+export * from './form/Select';
+export * from './form/Textarea';
+export * from './form/ToggleSwitch';
+
+// hooks
+export * from './hooks/useDataFetch';
+
 // layout
-export * from './layout/Card';
 export * from './layout/Accordion';
+export * from './layout/Card';
 export * from './layout/Drawer';
 export * from './layout/List';
 export * from './layout/Modal';
+
+// navigation
+export * from './navigation/Breadcrumbs';
+export * from './navigation/Menu';
+export * from './navigation/Pagination';
+export * from './navigation/SideNav';
+export * from './navigation/Stepper';
+export * from './navigation/Tabs';
+
+// templates-patterns
+export * from './templates-patterns/ActionBar';
+export * from './templates-patterns/ActivityFeed';
+export * from './templates-patterns/PageHeader';
+export * from './templates-patterns/SectionHeader';
+export * from './templates-patterns/StatCard';
 
 // ui
 export * from './ui/Avatar';
 export * from './ui/Badge';
 export * from './ui/Button';
-export * from './ui/Icon'; 
-export * from './ui/ChatFAB'; 
-
-//form
-export * from './form/ButtonGroup';
-export * from './form/Checkbox'; 
-export * from './form/ComboBox'; 
-export * from './form/Input'; 
-export * from './form/MultiSelect';
-export type { MultiSelectOption } from './form/MultiSelect';
-export * from './form/Radio';
-export * from './form/SearchInput';
-export * from './form/Select';
-export * from './form/ToggleSwitch';
-export * from './form/FileUpload';
-export * from './form/DatePicker';
-export * from './form/Textarea';
-
-//templates-patterns
-export * from './templates-patterns/ActivityFeed';
-export * from './templates-patterns/StatCard';
-export * from './templates-patterns/PageHeader';
-export * from './templates-patterns/SectionHeader';
-export * from './templates-patterns/ChartWithTable';
-export * from './templates-patterns/ActionBar';
-export * from './templates-patterns/FormTemplate';
-
-// charts
-export * from './charts/BarChart';
-export * from './charts/PieChart';
-export * from './charts/LineChart';
-
-// contexts
-export * from './contexts/ThemeContext';
-export type { ThemeName } from './contexts/ThemeContext'; 
-
-// navigation
-//export * from './navigation/Breadcrumbs';
-export * from './navigation/Menu';
-export * from './navigation/Pagination';
-export * from './navigation/Stepper';
-export * from './navigation/Tabs';
-export * from './navigation/SideNav';
-
-// data display & tables
-export * from './data-display/Table';
-export * from './data-display/DataTable';
-export * from './hooks/useDataFetch';
+export * from './ui/ChatFAB';
+export * from './ui/Icon';
