@@ -13,7 +13,8 @@
       "types": "./dist/index.d.ts"
     },
     "./style.css": "./dist/style.css",
-    "./tailwind.preset.js": "./tailwind.preset.js" 
+    "./tailwind.preset.js": "./tailwind.preset.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist", 
