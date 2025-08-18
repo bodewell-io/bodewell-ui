@@ -1,6 +1,6 @@
 {
   "name": "@bodewell/ui",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "private": false,
   "description": "A designer-centric prototyping framework with a pre-built component library.",
   "main": "./dist/bodewell-ui.umd.js",
@@ -17,7 +17,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist", 
+    "dist",
     "tailwind.preset.js"
   ],
   "scripts": {
