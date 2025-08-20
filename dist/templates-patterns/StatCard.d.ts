@@ -1,5 +1,6 @@
-import React from 'react';
+import { default as React } from 'react';
 import { Icon } from '../ui/Icon';
+
 interface StatCardProps {
     /** The title of the metric (e.g., 'Sales', 'Users'). */
     title: string;

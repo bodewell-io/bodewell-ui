@@ -1,15 +1,5 @@
-/**
- * @wizard
- * @name ThemeProvider
- * @description Provides the global theme context to the application, enabling dynamic theme switching and persistence.
- * @tags context, theme, provider, global, utility
- * @props
- * - name: children
- * type: React.ReactNode
- * description: The application's UI components that will consume the theme context.
- * @category utility
- */
-import React from 'react';
+import { default as React } from 'react';
+
 export type ThemeName = 'light' | 'dark' | 'corporate' | 'midnight' | 'blueprint';
 export declare const availableThemes: ThemeName[];
 interface ThemeContextType {

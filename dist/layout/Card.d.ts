@@ -1,4 +1,5 @@
-import { type HTMLAttributes, type FC } from 'react';
+import { HTMLAttributes, FC } from 'react';
+
 /**
  * Props for the Card component.
  * Allows for customization of background, border, padding, and shadow.

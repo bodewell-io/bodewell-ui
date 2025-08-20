@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     label?: string;
     containerClassName?: string;

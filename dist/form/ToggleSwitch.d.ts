@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 export interface ToggleSwitchProps {
     /** Whether the toggle is checked or not. */
     checked: boolean;

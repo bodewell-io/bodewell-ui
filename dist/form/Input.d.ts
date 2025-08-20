@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     /** An optional label to display above the input field. */
     label?: string;

@@ -1,5 +1,5 @@
-import React from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
+import { default as React } from 'react';
+
 export interface DatePickerProps {
     label?: string;
     onChange: (date: Date | null) => void;

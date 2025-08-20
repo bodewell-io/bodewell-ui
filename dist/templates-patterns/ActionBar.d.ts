@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 export interface ActionBarProps {
     /** The content of the action bar, typically buttons. */
     children: React.ReactNode;

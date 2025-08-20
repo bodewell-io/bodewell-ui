@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     /** Optional additional CSS classes for the container. */
     containerClassName?: string;

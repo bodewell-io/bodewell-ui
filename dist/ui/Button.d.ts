@@ -1,4 +1,5 @@
-import React, { type ButtonHTMLAttributes, type AnchorHTMLAttributes, type ReactNode } from 'react';
+import { default as React, ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
+
 declare const buttonVariants: {
     primary: string;
     secondary: string;

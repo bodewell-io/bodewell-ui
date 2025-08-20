@@ -1,5 +1,6 @@
-import React from 'react';
+import { default as React } from 'react';
 import { Icon } from '../ui/Icon';
+
 interface EmptyStateProps {
     /** The name of the Lucide icon to display. */
     icon?: React.ComponentProps<typeof Icon>['name'];

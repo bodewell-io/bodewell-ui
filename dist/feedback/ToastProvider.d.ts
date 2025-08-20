@@ -1,5 +1,6 @@
-import React from 'react';
-import { type ToastType } from './Toast';
+import { default as React } from 'react';
+import { ToastType } from './Toast';
+
 interface ToastContextType {
     addToast: (message: string, type?: ToastType, duration?: number) => void;
     dismissToast: (id: string) => void;

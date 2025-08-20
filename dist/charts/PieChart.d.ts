@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 export interface PieChartProps {
     /** The data to display in the chart. */
     data: any[];

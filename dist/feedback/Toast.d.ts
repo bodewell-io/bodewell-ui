@@ -1,4 +1,5 @@
-import React from 'react';
+import { default as React } from 'react';
+
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 export interface ToastProps {
     id: string;

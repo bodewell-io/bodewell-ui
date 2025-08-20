@@ -1,6 +1,6 @@
-import React from 'react';
-import { type TippyProps } from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+import { default as React } from 'react';
+import { TippyProps } from '@tippyjs/react';
+
 /**
  * A wrapper around the Tippy.js library to provide a standardized,
  * theme-aware tooltip for the Fanta Frontend project.

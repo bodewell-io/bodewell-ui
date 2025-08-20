@@ -1,4 +1,4 @@
-import './index.css';
+
 export type * from './types/wizard.d';
 export type { ThemeName } from './contexts/ThemeContext';
 export type { MultiSelectOption } from './form/MultiSelect';
