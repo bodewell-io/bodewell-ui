@@ -50,3 +50,8 @@ export * from './ui/Badge';
 export * from './ui/Button';
 export * from './ui/ChatFAB';
 export * from './ui/Icon';
+export * from './ai/Loader';
+export * from './ai/Actions';
+export * from './ai/PromptInput';
+export * from './ai/Message';
+export * from './ai/Conversation';
