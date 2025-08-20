@@ -1,147 +1,134 @@
 // packages/ui/scripts/generate-manifest.js
 const fs = require('fs');
 const path = require('path');
+const doctrine = require('doctrine');
 
-const manifest = {
-  components: [],
-  layouts: [],
-  utils: [],
-  hooks: [],
-  data: [],
-};
-
-// Simple JSDoc parser function
-const parseJsDoc = (content, filePath) => {
-  const docRegex = /\/\*\*\s*\n([\s\S]*?)\*\//;
-  const match = content.match(docRegex);
-  if (!match) return null;
-
-  const jsdoc = match[1];
-  const lines = jsdoc.split('\n').map(line => line.trim().replace(/^\*\s*/, '')).filter(line => line);
-  
-  const entry = {
-    name: path.basename(filePath).replace(/\.tsx?$/, ''),
-    description: '',
-    tags: [],
-    category: '',
-    filePath: path.relative(path.join(__dirname, '..'), filePath).replace(/\\/g, '/'),
-    props: [],
-  };
-
-  let isDescription = true;
-  let currentProp = null;
-
-  for (const line of lines) {
-    if (line.startsWith('@name')) {
-        entry.name = line.substring(6).trim();
-    } else if (line.startsWith('@description')) {
-        entry.description = line.substring(13).trim();
-    } else if (line.startsWith('@tags')) {
-        entry.tags = line.substring(6).split(',').map(tag => tag.trim());
-    } else if (line.startsWith('@category')) {
-        entry.category = line.substring(10).trim();
-    } else if (line.startsWith('@prop')) {
-        isDescription = false;
-        const propMatch = line.match(/@prop\s+(\S+)\s+\{([^}]+)\}\s+(.*)/);
-        if (propMatch) {
-            currentProp = { name: propMatch[1], type: propMatch[2], description: propMatch[3] };
-            entry.props.push(currentProp);
-        } else {
-            currentProp = null; // Reset if the format is wrong
-        }
-    } else if (line.startsWith('@default')) {
-        if (currentProp) {
-            currentProp.default = line.substring(9).trim();
-        }
-    } else if (line.startsWith('@returns')) {
-        // Simple handling for @returns
-        if (!entry.returns) entry.returns = [];
-        const returnsMatch = line.match(/@returns\s+\{([^}]+)\}\s+(.*)/);
-        if (returnsMatch) {
-            entry.returns.push({ name: '', type: returnsMatch[1], description: returnsMatch[2] });
-        }
-    } else if (isDescription) {
-        entry.description += ' ' + line;
-    }
-  }
-
-  // Fallback if description is empty and a JSDoc description was present
-  if (!entry.description && lines.length > 0) {
-    entry.description = lines[0];
-  }
-
-  return entry;
-};
-
-// Recursive file scanner
-const scanDirectory = (dirPath) => {
-  fs.readdirSync(dirPath).forEach(file => {
-    const filePath = path.join(dirPath, file);
-    const stat = fs.statSync(filePath);
-
-    if (stat.isDirectory()) {
-      scanDirectory(filePath);
-    } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const entry = parseJsDoc(content, filePath);
-      
-      if (entry && entry.category) {
-        // Simple categorization based on tags and file names
-        if (entry.category.includes('charts')) manifest.components.push(entry);
-        else if (entry.category.includes('data-display')) manifest.components.push(entry);
-        else if (entry.category.includes('form')) manifest.components.push(entry);
-        else if (entry.category.includes('layout')) manifest.components.push(entry);
-        else if (entry.category.includes('navigation')) manifest.components.push(entry);
-        else if (entry.category.includes('feedback')) manifest.components.push(entry);
-        else if (entry.category.includes('templates-patterns')) manifest.components.push(entry);
-        else if (entry.category.includes('ui')) manifest.components.push(entry);
-        else if (entry.category.includes('hook')) manifest.hooks.push(entry);
-        else if (entry.category.includes('utility') || entry.category.includes('context')) manifest.utils.push(entry);
-        else if (entry.category.includes('data')) manifest.data.push(entry);
+// Function to find all relevant source files
+const getSourceFiles = (dir) => {
+  let files = [];
+  const items = fs.readdirSync(dir, { withFileTypes: true });
+  for (const item of items) {
+    const fullPath = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      files = [...files, ...getSourceFiles(fullPath)];
+    } else if (item.name.endsWith('.tsx') || item.name.endsWith('.ts')) {
+      // Exclude test files and storybook files
+      if (!item.name.endsWith('.test.tsx') && !item.name.endsWith('.stories.tsx')) {
+        files.push(fullPath);
       }
     }
-  });
+  }
+  return files;
+};
+
+// Function to parse the JSDoc comments from a file's content
+const parseJsDoc = (content) => {
+  const docRegex = /\/\*\*\s*@wizard([\s\S]*?)\*\//g;
+  const entries = [];
+  let match;
+
+  while ((match = docRegex.exec(content)) !== null) {
+    const jsdoc = `/**${match[1]}*/`;
+    const ast = doctrine.parse(jsdoc, { unwrap: true, sloppy: true });
+    
+    const entry = {
+      name: '',
+      description: ast.description || '',
+      tags: [],
+      category: '',
+      props: [],
+    };
+
+    for (const tag of ast.tags) {
+      switch (tag.title) {
+        case 'name':
+          entry.name = tag.description;
+          break;
+        case 'description':
+          entry.description = tag.description;
+          break;
+        case 'tags':
+          entry.tags = tag.description.split(',').map(t => t.trim());
+          break;
+        case 'category':
+          entry.category = tag.description;
+          break;
+        case 'props':
+          // Handle multi-line YAML-like props
+          entry.props = tag.description.split('\\n- ').map(propStr => {
+            if (!propStr.trim()) return null;
+            const propLines = propStr.trim().split('\\n');
+            const prop = {};
+            propLines.forEach(line => {
+              const [key, ...valueParts] = line.split(':');
+              const value = valueParts.join(':').trim();
+              if (key && value) {
+                prop[key.trim().replace('-', '')] = value;
+              }
+            });
+            return prop;
+          }).filter(Boolean);
+          break;
+      }
+    }
+    
+    if (entry.name && entry.category) {
+      entries.push(entry);
+    }
+  }
+
+  return entries;
 };
 
 // Main function to build and write the manifest
 const buildManifest = () => {
-    // Reset manifest before each run
-    manifest.components = [];
-    manifest.layouts = [];
-    manifest.utils = [];
-    manifest.hooks = [];
-    manifest.data = [];
+  const manifest = {
+    components: [],
+    layouts: [],
+    utils: [],
+    hooks: [],
+    data: [],
+  };
 
-    const startPath = path.join(__dirname, '../src');
-    scanDirectory(startPath);
-  
-    // Manual adjustment for layouts if needed, or refine script to pull from a dedicated layouts dir
-    // For now, let's keep it simple and just use the categories in the components.
-    
-    // Final touch for data, as it's a special case
-    const mockDataEntry = {
-        name: "Mock Data Sets",
-        description: "Pre-defined datasets for prototyping tables, charts, and other data-driven components.",
-        tags: ["data", "mock", "example"],
-        category: "data",
-        availableData: ["mockTableData", "mockChartData", "mockPieChartData", "mockLargeTableData"],
-        filePath: "data/mockData.ts"
-    };
-    manifest.data.push(mockDataEntry);
+  const srcDir = path.resolve(__dirname, '../src');
+  const files = getSourceFiles(srcDir);
 
-    const manifestContent = `
+  for (const file of files) {
+    const content = fs.readFileSync(file, 'utf-8');
+    const entries = parseJsDoc(content);
+    const filePath = path.relative(path.join(__dirname, '..'), file).replace(/\\\\/g, '/');
+
+    for (const entry of entries) {
+      entry.filePath = filePath;
+      if (manifest[entry.category]) {
+        manifest[entry.category].push(entry);
+      } else if (entry.category) {
+        // If the category is not a pre-defined key, add it to components as a fallback
+        manifest.components.push(entry);
+      }
+    }
+  }
+
+  const manifestContent = `
 // This file is auto-generated by scripts/generate-manifest.js
 // Do not modify this file directly.
 
-// Import the types from your dedicated types file
 import type { WizardManifest } from './src/types/wizard';
 
 export const wizardManifest: WizardManifest = ${JSON.stringify(manifest, null, 2)} as const;
 `;
 
-    // Ensure the output file is in the root of the ui package
-    fs.writeFileSync(path.join(__dirname, '../wizardManifest.ts'), manifestContent.trim());
-    console.log('Wizard manifest generated successfully!');
+  fs.writeFileSync(path.resolve(__dirname, '../wizardManifest.ts'), manifestContent.trim());
+  console.log('Wizard manifest generated successfully!');
 };
+
+// We need to install doctrine: pnpm install -D doctrine @types/doctrine
+// For the script to run, we first need to handle the dependencies.
+try {
+  require('doctrine');
+} catch (e) {
+  console.error('Doctrine not found. Please run: pnpm add -D doctrine @types/doctrine');
+  process.exit(1);
+}
 
 buildManifest();
