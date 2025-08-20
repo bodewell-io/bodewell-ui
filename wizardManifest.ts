@@ -19,6 +19,20 @@ export const wizardManifest: WizardManifest = {
       "props": []
     },
     {
+      "name": "ChartWithTable",
+      "description": "A wrapper component that combines a chart with an option to view its underlying data in a table within a drawer.",
+      "tags": [
+        "templates",
+        "charts",
+        "data-display",
+        "pattern",
+        "dashboard"
+      ],
+      "category": "templates-patterns",
+      "filePath": "src/charts/ChartWithTable.tsx",
+      "props": []
+    },
+    {
       "name": "LineChart",
       "description": "A theme-aware line chart component powered by Recharts, for visualizing trends over time or categories.",
       "tags": [
@@ -164,6 +178,19 @@ export const wizardManifest: WizardManifest = {
       "props": []
     },
     {
+      "name": "FormTemplate",
+      "description": "A flexible component for rapidly building forms based on a declarative array of field configurations.",
+      "tags": [
+        "templates",
+        "form",
+        "structure",
+        "pattern"
+      ],
+      "category": "templates-patterns",
+      "filePath": "src/form/FormTemplate.tsx",
+      "props": []
+    },
+    {
       "name": "Input",
       "description": "A theme-aware text input component with support for labels, helper text, and validation states.",
       "tags": [
@@ -215,6 +242,18 @@ export const wizardManifest: WizardManifest = {
       ],
       "category": "form",
       "filePath": "src/form/Select.tsx",
+      "props": []
+    },
+    {
+      "name": "Textarea",
+      "description": "A theme-aware textarea component for multi-line text input.",
+      "tags": [
+        "form",
+        "input",
+        "ui"
+      ],
+      "category": "form",
+      "filePath": "src/form/Textarea.tsx",
       "props": []
     },
     {
@@ -358,33 +397,6 @@ export const wizardManifest: WizardManifest = {
       ],
       "category": "templates-patterns",
       "filePath": "src/templates-patterns/ActivityFeed.tsx",
-      "props": []
-    },
-    {
-      "name": "ChartWithTable",
-      "description": "A wrapper component that combines a chart with an option to view its underlying data in a table within a drawer.",
-      "tags": [
-        "templates",
-        "charts",
-        "data-display",
-        "pattern",
-        "dashboard"
-      ],
-      "category": "templates-patterns",
-      "filePath": "src/templates-patterns/ChartWithTable.tsx",
-      "props": []
-    },
-    {
-      "name": "FormTemplate",
-      "description": "A flexible component for rapidly building forms based on a declarative array of field configurations.",
-      "tags": [
-        "templates",
-        "form",
-        "structure",
-        "pattern"
-      ],
-      "category": "templates-patterns",
-      "filePath": "src/templates-patterns/FormTemplate.tsx",
       "props": []
     },
     {
