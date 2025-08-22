@@ -3,6 +3,7 @@ export type * from './types/wizard.d';
 export type { ThemeName } from './contexts/ThemeContext';
 export type { MultiSelectOption } from './form/MultiSelect';
 export type { ColDef, GridOptions } from 'ag-grid-community';
+export * from './data/mockData';
 export * from './charts/BarChart';
 export * from './charts/ChartWithTable';
 export * from './charts/LineChart';
