@@ -1,131 +1,128 @@
-// src/components/templates-patterns/FormTemplate.tsx
-import React, { useState } from 'react';
-import { Button } from '../ui/Button';
-import { Input } from './Input';
-import { Select } from './Select';
-import { Checkbox } from './Checkbox';
-import { Radio } from './Radio';
-import { Card } from '../layout/Card';
-import { SectionHeader } from '../templates-patterns/SectionHeader';
-import { ActionBar } from '../templates-patterns/ActionBar';
+import React, { useState, useCallback } from 'react';
 
-// Define common props for a form field
+import { Button } from '../ui/Button';
+import { Input } from '../form/Input';
+import { Select } from '../form/Select';
+import { Checkbox } from '../form/Checkbox';
+import { Radio } from '../form/Radio';
+import { Textarea } from '../form/Textarea';
+import { ToggleSwitch } from '../form/ToggleSwitch';
+import { ComboBox } from '../form/ComboBox';
+import { MultiSelect, type MultiSelectOption } from '../form/MultiSelect';
+import { DatePicker } from '../form/DatePicker';
+
+// --- TYPE DEFINITIONS (Remain the same) ---
+
 interface FormFieldBase {
   name: string;
   label: string;
   className?: string;
   disabled?: boolean;
+  colSpan?: number;
 }
 
-// Input Field
 interface FormInput extends FormFieldBase {
   type: 'text' | 'email' | 'password' | 'number';
   placeholder?: string;
   value?: string | number;
 }
-
-// Select Field
+interface FormTextarea extends FormFieldBase {
+  type: 'textarea';
+  placeholder?: string;
+  value?: string;
+  rows?: number;
+}
 interface SelectOption {
   value: string | number;
   label: string;
 }
-
 interface FormSelect extends FormFieldBase {
   type: 'select';
   options: SelectOption[];
   value?: string | number;
 }
-
-// Checkbox Field
 interface FormCheckbox extends FormFieldBase {
   type: 'checkbox';
   checked?: boolean;
 }
-
-// Radio Field (part of a group, 'name' is crucial)
+interface FormToggle extends FormFieldBase {
+  type: 'toggle';
+  checked?: boolean;
+}
 interface FormRadio extends FormFieldBase {
   type: 'radio';
   value: string | number;
   checked?: boolean;
-  radioGroup: string; // Explicit identifier for the radio group
+  radioGroup: string;
+}
+interface FormComboBox extends FormFieldBase {
+  type: 'combobox';
+  options: SelectOption[];
+  value?: string | number | null;
+  placeholder?: string;
+}
+interface FormMultiSelect extends FormFieldBase {
+  type: 'multiselect';
+  options: MultiSelectOption[];
+  value?: MultiSelectOption[] | null;
+}
+interface FormDatePicker extends FormFieldBase {
+  type: 'datepicker';
+  value?: Date | null;
+  placeholder?: string;
 }
 
-export type FormField = FormInput | FormSelect | FormCheckbox | FormRadio;
+export type FormField =
+  | FormInput
+  | FormTextarea
+  | FormSelect
+  | FormCheckbox
+  | FormToggle
+  | FormRadio
+  | FormComboBox
+  | FormMultiSelect
+  | FormDatePicker;
+
+
+// --- COMPONENT PROPS ---
 
 export interface FormTemplateProps {
-  title: string;
   fields: FormField[];
   onSubmit: (formData: Record<string, any>) => void;
-  onCancel?: () => void;
-  submitButtonText?: string;
-  cancelButtonText?: string;
+  // Title and action buttons are now controlled by the parent component
   className?: string;
+  // Pass children to allow for custom button layouts
+  children?: React.ReactNode;
 }
 
-/**
- * @wizard
- * @name FormTemplate
- * @description A flexible component for rapidly building forms based on a declarative array of field configurations.
- * @tags templates, form, structure, pattern
- * @props
- * - name: title
- * type: string
- * description: The main title displayed at the top of the form.
- * - name: fields
- * type: FormField[]
- * description: An array of objects, where each object defines a form input, select, checkbox, or radio field.
- * - name: onSubmit
- * type: (formData: Record<string, any>) => void
- * description: Callback function triggered when the form is submitted, providing the current form data.
- * - name: onCancel
- * type: () => void
- * description: Optional callback function triggered when the 'Cancel' button is clicked.
- * - name: submitButtonText
- * type: string
- * description: The text displayed on the primary submit button.
- * default: 'Submit'
- * - name: cancelButtonText
- * type: string
- * description: The text displayed on the cancel button.
- * default: 'Cancel'
- * - name: className
- * type: string
- * description: Optional additional CSS classes for the outer form container.
- * @category templates-patterns
- */
+
+// --- REFACTORED COMPONENT ---
+
 export const FormTemplate: React.FC<FormTemplateProps> = ({
-  title,
   fields,
   onSubmit,
-  onCancel,
-  submitButtonText = 'Submit',
-  cancelButtonText = 'Cancel',
   className,
+  children, // Accept children for actions
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     const initialState: Record<string, any> = {};
     fields.forEach(field => {
-      if (field.type === 'checkbox') {
-        initialState[field.name] = (field as FormCheckbox).checked || false;
+       if (field.type === 'checkbox' || field.type === 'toggle') {
+        initialState[field.name] = field.checked || false;
       } else if (field.type === 'radio') {
-        if ((field as FormRadio).checked) {
-          initialState[(field as FormRadio).radioGroup] = field.value;
+        if (field.checked) {
+          initialState[field.radioGroup] = field.value;
         }
       } else {
-        initialState[field.name] = (field as FormInput | FormSelect).value || '';
+        initialState[field.name] = field.value || '';
       }
     });
     return initialState;
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    if (type === 'checkbox') {
-      setFormData(prev => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
+  const handleFieldChange = useCallback((name: string, value: any) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,35 +131,47 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
 
   const renderField = (field: FormField) => {
     const commonProps = { id: field.name, label: field.label, className: field.className, disabled: field.disabled };
+    
     switch (field.type) {
       case 'text': case 'email': case 'password': case 'number':
-        return <Input {...commonProps} name={field.name} type={field.type} placeholder={(field as FormInput).placeholder} value={formData[field.name]} onChange={handleChange} />;
+        return <Input {...commonProps} name={field.name} type={field.type} placeholder={field.placeholder} value={formData[field.name]} onChange={(e) => handleFieldChange(field.name, e.target.value)} />;
+      case 'textarea':
+        return <Textarea {...commonProps} name={field.name} placeholder={field.placeholder} value={formData[field.name]} onChange={(e) => handleFieldChange(field.name, e.target.value)} rows={field.rows} />;
       case 'select':
-        return <Select {...commonProps} name={field.name} options={(field as FormSelect).options} value={formData[field.name]} onChange={handleChange} />;
+        return <Select {...commonProps} name={field.name} options={field.options} value={formData[field.name]} onChange={(e) => handleFieldChange(field.name, e.target.value)} />;
       case 'checkbox':
-        return <Checkbox {...commonProps} name={field.name} checked={formData[field.name]} onChange={handleChange} />;
+        return <Checkbox {...commonProps} name={field.name} checked={formData[field.name]} onChange={(e) => handleFieldChange(field.name, e.target.checked)} />;
+      case 'toggle':
+        return <ToggleSwitch {...commonProps} checked={formData[field.name]} onChange={(checked) => handleFieldChange(field.name, checked)} />;
       case 'radio':
-        return <Radio {...commonProps} name={(field as FormRadio).radioGroup} value={field.value} checked={formData[(field as FormRadio).radioGroup] === field.value} onChange={handleChange} />;
+        return <Radio {...commonProps} name={field.radioGroup} value={field.value} checked={formData[field.radioGroup] === field.value} onChange={(e) => handleFieldChange(field.radioGroup, e.target.value)} />;
+      case 'combobox':
+        return <ComboBox {...commonProps} options={field.options} value={formData[field.name]} onOptionSelect={(value) => handleFieldChange(field.name, value)} placeholder={field.placeholder} />;
+      case 'multiselect':
+        return <MultiSelect {...commonProps} options={field.options} value={formData[field.name]} onChange={(value) => handleFieldChange(field.name, value)} />;
+      case 'datepicker':
+        return <DatePicker {...commonProps} selected={formData[field.name]} onChange={(date) => handleFieldChange(field.name, date)} placeholderText={field.placeholder} />;
       default: return null;
     }
   };
 
   return (
-    <Card className={className} padding="p-0">
-      <form onSubmit={handleSubmit}>
-        <div className="p-6">
-          <SectionHeader title={title} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            {fields.map((field) => (
-              <div key={field.name + (field.type === 'radio' ? (field as FormRadio).value : '')}>{renderField(field)}</div>
-            ))}
+    // The Card, SectionHeader, and ActionBar are now removed.
+    // The component is a pure form with its field grid.
+    <form onSubmit={handleSubmit} className={className}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {fields.map((field) => (
+          <div 
+            key={field.name + (field.type === 'radio' ? field.value : '')}
+            style={{ gridColumn: `span ${field.colSpan || 1}` }}
+          >
+            {renderField(field)}
           </div>
-        </div>
-        <ActionBar>
-          {onCancel && <Button type="button" variant="outline" onClick={onCancel}>{cancelButtonText}</Button>}
-          <Button type="submit" variant="primary">{submitButtonText}</Button>
-        </ActionBar>
-      </form>
-    </Card>
+        ))}
+      </div>
+      
+      {/* Render custom action buttons passed as children */}
+      {children && <div className="mt-8">{children}</div>}
+    </form>
   );
 };
