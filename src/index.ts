@@ -7,7 +7,28 @@ import './index.css';
 export type * from './types/wizard.d';
 export type { ThemeName } from './contexts/ThemeContext';
 export type { MultiSelectOption } from './form/MultiSelect';
-export type { ColDef, GridOptions } from 'ag-grid-community';
+
+// AGgrid types
+export type {
+  // Core Types
+  ColDef,
+  ColGroupDef,
+  GridOptions,
+  GridApi,
+  ColumnApi,
+  
+  // Value and Cell Renderer Types
+  ValueFormatterParams,
+  ValueGetterParams,
+  ICellRendererParams,
+  
+  // Event Types
+  CellClickedEvent,
+  RowSelectedEvent,
+  
+  // Header Types
+  IHeaderParams,
+} from 'ag-grid-community';
 export * from './data/mockData';
 
 // 3. Export all components, hooks, and utilities
