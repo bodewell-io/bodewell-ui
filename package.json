@@ -34,6 +34,7 @@
   "dependencies": {
     "@tippyjs/react": "^4.2.6",
     "ag-grid-community": "^31.3.1",
+    "ag-grid-enterprise": "^34.1.2",
     "ag-grid-react": "^31.3.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
