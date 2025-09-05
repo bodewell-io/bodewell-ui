@@ -3,11 +3,7 @@ import { default as React } from 'react';
 export interface BarChartProps {
     data: any[];
     dataKeyX: string;
-    barKeys: {
-        key: string;
-        color: string;
-    }[];
-    title?: string;
+    barKeys: string[];
 }
 /**
  * @wizard

@@ -99,6 +99,7 @@ export * from './ui/Badge';
 export * from './ui/Button';
 export * from './ui/ChatFAB';
 export * from './ui/Icon';
+export * from './ui/CodeBlock';
 
 // ai 
 export * from './ai/Loader';

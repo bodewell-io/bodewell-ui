@@ -51,6 +51,7 @@ export * from './ui/Badge';
 export * from './ui/Button';
 export * from './ui/ChatFAB';
 export * from './ui/Icon';
+export * from './ui/CodeBlock';
 export * from './ai/Loader';
 export * from './ai/Actions';
 export * from './ai/PromptInput';

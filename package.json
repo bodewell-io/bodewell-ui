@@ -1,6 +1,6 @@
 {
   "name": "@bodewell/ui",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "private": false,
   "description": "A designer-centric prototyping framework with a pre-built component library.",
   "main": "./dist/index.umd.js",
@@ -43,6 +43,7 @@
     "lucide-react": "^0.537.0",
     "react-datepicker": "^7.3.0",
     "react-select": "^5.8.0",
+    "react-syntax-highlighter": "^15.6.6",
     "recharts": "^2.12.7",
     "tippy.js": "^6.3.7"
   },
@@ -59,6 +60,7 @@
     "@types/node": "^24.2.1",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.1",

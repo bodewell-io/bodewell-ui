@@ -3,11 +3,7 @@ import { default as React } from 'react';
 export interface LineChartProps {
     data: any[];
     dataKeyX: string;
-    lineKeys: {
-        key: string;
-        color: string;
-    }[];
-    title?: string;
+    lineKeys: string[];
 }
 /**
  * @wizard
