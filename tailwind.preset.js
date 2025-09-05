@@ -1,38 +1,42 @@
-// bodewell-ui/tailwind.preset.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
     extend: {
       colors: {
-        border: 'var(--app-border-color)',
-        input: 'var(--app-border-color)',
-        ring: 'var(--app-primary-color)',
-        background: 'var(--app-bg-color)',
-        foreground: 'var(--app-text-color)',
+        border: 'rgb(var(--app-border-color) / <alpha-value>)',
+        input: 'rgb(var(--app-input-border-color) / <alpha-value>)',
+        ring: 'rgb(var(--app-input-focus-ring-color) / <alpha-value>)',
+        background: 'rgb(var(--app-bg-color) / <alpha-value>)',
+        foreground: 'rgb(var(--app-text-color) / <alpha-value>)',
         primary: {
-          DEFAULT: 'var(--app-primary-color)',
-          foreground: 'var(--app-primary-foreground-color)',
+          DEFAULT: 'rgb(var(--app-primary-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-primary-foreground-color) / <alpha-value>)',
         },
         secondary: {
-          DEFAULT: 'var(--app-secondary-color)',
-          foreground: 'var(--app-secondary-foreground-color)',
+          DEFAULT: 'rgb(var(--app-secondary-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-secondary-foreground-color) / <alpha-value>)',
         },
         destructive: {
-          DEFAULT: 'var(--app-danger-color)',
-          foreground: 'var(--app-danger-foreground-color)',
+          DEFAULT: 'rgb(var(--app-danger-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-danger-foreground-color) / <alpha-value>)',
         },
         muted: {
-          DEFAULT: 'var(--app-card-bg-color)',
-          foreground: 'var(--app-text-color)',
+          DEFAULT: 'rgb(var(--app-card-bg-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-text-color) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: 'var(--app-accent-color)',
-          foreground: 'var(--app-accent-foreground-color)',
+          DEFAULT: 'rgb(var(--app-accent-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-accent-foreground-color) / <alpha-value>)',
         },
-        card: { // <-- THIS IS THE FIX
-          DEFAULT: 'var(--app-card-bg-color)',
-          foreground: 'var(--app-text-color)',
+        card: {
+          DEFAULT: 'rgb(var(--app-card-bg-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-text-color) / <alpha-value>)',
         },
+      },
+      borderRadius: {
+        lg: `var(--app-border-radius-lg)`,
+        md: `var(--app-border-radius-md)`,
+        sm: `var(--app-border-radius-sm)`,
       },
       fontFamily: {
         sans: ['var(--app-font-sans)'],

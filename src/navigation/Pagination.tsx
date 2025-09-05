@@ -2,7 +2,6 @@
 
 import React, { useCallback, useMemo } from 'react';
 import { Button } from '../ui/Button';
-import { Icon } from '../ui/Icon';
 
 export interface PaginationProps {
   /** The currently active page number. */
@@ -18,13 +17,9 @@ export interface PaginationProps {
 }
 
 /**
- * A component for navigating through paginated content. It provides controls
- * for moving to the next, previous, or a specific page number.
- */
-/**
  * @wizard
  * @name Pagination
- * @description A navigation control for moving between pages of content, providing 'Previous', 'Next', and direct page number access.
+ * @description A navigation control for moving between pages of content.
  * @tags navigation, ui, data-display
  * @props
  * - name: currentPage
@@ -32,20 +27,19 @@ export interface PaginationProps {
  * description: The currently active page number (1-based index).
  * - name: totalPages
  * type: number
- * description: The total number of pages available for navigation.
+ * description: The total number of pages available.
  * - name: onPageChange
  * type: (page: number) => void
- * description: Callback function invoked when the user selects a new page number.
+ * description: Callback function invoked when the user selects a new page.
  * - name: maxPageButtons
  * type: number
- * description: The maximum number of visible page number buttons to display (excluding '...' and first/last page).
+ * description: The maximum number of visible page number buttons.
  * default: 5
  * - name: className
  * type: string
- * description: Optional additional CSS classes for the pagination container.
+ * description: Optional additional CSS classes for the container.
  * @category navigation
  */
-
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
@@ -117,7 +111,8 @@ export const Pagination: React.FC<PaginationProps> = ({
         size="sm"
         onClick={handlePrevClick}
         disabled={currentPage === 1}
-        iconBefore={<Icon name="chevron-left" size={16} />}
+        // FIX: Changed from `iconBefore` to `iconLeft` and passed the icon name string
+        iconLeft="chevron-left"
       >
         Previous
       </Button>
@@ -135,7 +130,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               {page}
             </Button>
           ) : (
-            <span key={`ellipsis-${index}`} className="px-2 py-1 text-sm text-text-light">
+            <span key={`ellipsis-${index}`} className="px-2 py-1 text-sm text-muted-foreground">
               ...
             </span>
           )
@@ -147,7 +142,8 @@ export const Pagination: React.FC<PaginationProps> = ({
         size="sm"
         onClick={handleNextClick}
         disabled={currentPage === totalPages}
-        iconAfter={<Icon name="chevron-right" size={16} />}
+        // FIX: Changed from `iconAfter` to `iconRight` and passed the icon name string
+        iconRight="chevron-right"
       >
         Next
       </Button>

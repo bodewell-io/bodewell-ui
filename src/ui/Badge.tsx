@@ -1,49 +1,56 @@
 import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-// Define the component's variants and props
-const badgeVariants = {
-  primary: 'bg-primary text-primary-foreground',
-  secondary: 'bg-secondary text-secondary-foreground',
-  danger: 'bg-danger text-danger-foreground',
-  success: 'bg-green-500 text-white',
-  outline: 'text-foreground border border-border',
-
+const cn = (...classes: (string | undefined | null | false)[]) => {
+  return classes.filter(Boolean).join(' ');
 };
 
-export interface BadgeProps {
-  /** The content to display inside the badge. */
-  children: React.ReactNode;
-  /** The color scheme of the badge. */
-  variant?: keyof typeof badgeVariants;
-  /** Optional additional CSS classes. */
-  className?: string;
-}
+// Define badge styles and variants using cva
+const badgeVariants = cva(
+  'inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        primary:
+          'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
+        secondary:
+          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        // FIX: This now correctly uses our theme's 'destructive' color variables.
+        danger:
+          'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
+        success:
+          'border-transparent bg-accent text-accent-foreground shadow hover:bg-accent/80',
+        outline: 'text-foreground',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+    },
+  }
+);
 
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+    
 /**
  * @wizard
  * @name Badge
- * @description A small component used for status indicators, labels, or counts.
- * @tags ui, status, label, indicator
+ * @description A small component to display a status, count, or label.
+ * @tags ui, label, indicator
  * @props
+ * - name: variant
+ * type: "'primary' | 'secondary' | 'danger' | 'success' | 'outline'"
+ * description: The visual style of the badge.
  * - name: children
  * type: React.ReactNode
- * description: The content to display inside the badge (e.g., text, number).
- * - name: variant
- * type: "'primary' | 'secondary' | 'danger' | 'outline'"
- * description: Defines the color scheme of the badge.
- * default: 'primary'
- * - name: className
- * type: string
- * description: Optional additional CSS classes for custom styling.
+ * description: The content to display inside the badge.
  * @category ui
  */
-export const Badge = ({
-  children,
-  variant = 'primary',
-  className = '',
-}: BadgeProps) => {
-  const baseClasses = 'inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold';
-  const variantClasses = badgeVariants[variant];
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return (
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+  );
+}
 
-  return <span className={`${baseClasses} ${variantClasses} ${className}`}>{children}</span>;
-};
+export { Badge, badgeVariants };

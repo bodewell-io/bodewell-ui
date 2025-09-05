@@ -1,37 +1,24 @@
 import { default as React } from 'react';
+import { VariantProps } from 'class-variance-authority';
 
-declare const badgeVariants: {
-    primary: string;
-    secondary: string;
-    danger: string;
-    success: string;
-    outline: string;
-};
-export interface BadgeProps {
-    /** The content to display inside the badge. */
-    children: React.ReactNode;
-    /** The color scheme of the badge. */
-    variant?: keyof typeof badgeVariants;
-    /** Optional additional CSS classes. */
-    className?: string;
+declare const badgeVariants: (props?: ({
+    variant?: "outline" | "primary" | "danger" | "secondary" | "success" | null | undefined;
+} & import('class-variance-authority/types').ClassProp) | undefined) => string;
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
 }
 /**
  * @wizard
  * @name Badge
- * @description A small component used for status indicators, labels, or counts.
- * @tags ui, status, label, indicator
+ * @description A small component to display a status, count, or label.
+ * @tags ui, label, indicator
  * @props
+ * - name: variant
+ * type: "'primary' | 'secondary' | 'danger' | 'success' | 'outline'"
+ * description: The visual style of the badge.
  * - name: children
  * type: React.ReactNode
- * description: The content to display inside the badge (e.g., text, number).
- * - name: variant
- * type: "'primary' | 'secondary' | 'danger' | 'outline'"
- * description: Defines the color scheme of the badge.
- * default: 'primary'
- * - name: className
- * type: string
- * description: Optional additional CSS classes for custom styling.
+ * description: The content to display inside the badge.
  * @category ui
  */
-export declare const Badge: ({ children, variant, className, }: BadgeProps) => import("react/jsx-runtime").JSX.Element;
-export {};
+declare function Badge({ className, variant, ...props }: BadgeProps): import("react/jsx-runtime").JSX.Element;
+export { Badge, badgeVariants };

@@ -1,12 +1,8 @@
 import { default as React } from 'react';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { AgGridReactProps } from 'ag-grid-react';
 
-export interface DataTableProps {
-    rowData: any[];
-    columnDefs: ColDef[];
+export interface DataTableProps extends AgGridReactProps {
     height?: string;
-    defaultColDef?: ColDef;
-    gridOptions?: GridOptions;
 }
 /**
  * @wizard

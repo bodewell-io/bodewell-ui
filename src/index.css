@@ -1,387 +1,246 @@
-/* src/styles/themes.css */
+/* Import Tailwind base styles */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-/* --- Theme Definitions (Classes applied to document.documentElement) --- */
+/* Import styles for third-party libraries */
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+@import 'react-datepicker/dist/react-datepicker.css';
+@import 'tippy.js/dist/tippy.css';
 
-/* Light Theme (Default for the system if no dark preference) */
-.light {
-  /* Font Variables */
-  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --app-font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-
-  /* Color Variables */
-  --app-primary-color: rgb(37, 99, 235);
-  --app-primary-foreground-color: rgb(255, 255, 255);
-  --app-secondary-color: rgb(249, 115, 22);
-  --app-secondary-foreground-color: rgb(255, 255, 255);
-  --app-accent-color: rgb(102, 126, 234);
-  --app-accent-foreground-color: rgb(255, 255, 255);
-  --app-text-color: rgb(31, 41, 55);
-  --app-bg-color: rgb(243, 244, 246);
-  --app-card-bg-color: rgb(255, 255, 255);
-  --app-border-color: rgb(229, 231, 235);
-  --app-bg-color-hover: rgb(240, 240, 240);
-  --app-danger-color: 220, 38, 38;        /* red-600 */
-  --app-danger-foreground-color: rgb(240, 240, 240); /* white */
-  
-
-
-  /* Raw RGB values for Tailwind CSS opacity modifiers */
-  --app-primary-color-raw: 37, 99, 235;
-  --app-primary-foreground-color-raw: 255, 255, 255;
-  --app-secondary-color-raw: 249, 115, 22;
-  --app-secondary-foreground-color-raw: 255, 255, 255;
-  --app-accent-color-raw: 102, 126, 234;
-  --app-accent-foreground-color-raw: 255, 255, 255;
-  --app-text-color-raw: 31, 41, 55;
-  --app-bg-color-raw: 243, 244, 246;
-  --app-card-bg-color-raw: 255, 255, 255;
-  --app-border-color-raw: 229, 231, 235;
-  --app-bg-color-hover-raw: 255, 255, 255;
-  --app-danger-color-raw: 220, 38, 38;
-  --app-danger-foreground-color-raw: 255, 255, 255;
-}
-
-/* Dark Theme */
-.dark {
-  /* Font Variables */
-  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --app-font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-
-  /* Color Variables */
-  --app-primary-color: rgb(96, 165, 250);
-  --app-primary-foreground-color: rgb(17, 24, 39);
-  --app-secondary-color: rgb(251, 146, 60);
-  --app-secondary-foreground-color: rgb(17, 24, 39);
-  --app-accent-color: rgb(129, 140, 248);
-  --app-accent-foreground-color: rgb(17, 24, 39);
-  --app-text-color: rgb(209, 213, 219);
-  --app-bg-color: rgb(17, 24, 39);
-  --app-card-bg-color: rgb(31, 41, 55);
-  --app-border-color: rgb(55, 65, 81);
-  --app-bg-color-hover: rgb(42, 42, 42);
-  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
-  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
-
-  /* Raw RGB values for Tailwind CSS opacity modifiers */
-  --app-primary-color-raw: 96, 165, 250;
-  --app-primary-foreground-color-raw: 17, 24, 39;
-  --app-secondary-color-raw: 251, 146, 60;
-  --app-secondary-foreground-color-raw: 17, 24, 39;
-  --app-accent-color-raw: 129, 140, 248;
-  --app-accent-foreground-color-raw: 17, 24, 39;
-  --app-text-color-raw: 209, 213, 219;
-  --app-bg-color-raw: 17, 24, 39;
-  --app-card-bg-color-raw: 31, 41, 55;
-  --app-border-color-raw: 55, 65, 81;
-  --app-bg-color-hover-raw: 42, 42, 42;
-  --app-danger-color-raw: 220, 38, 38;
-  --app-danger-foreground-color-raw: 255, 255, 255;
-}
-
-/* Corporate Theme */
-.corporate {
-  /* Font Variables */
-  --app-font-sans: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --app-font-serif: 'Merriweather', Georgia, Cambria, 'Times New Roman', Times, serif;
-  
-  /* Color Variables */
-  --app-primary-color: rgb(16, 185, 129);
-  --app-primary-foreground-color: rgb(255, 255, 255);
-  --app-secondary-color: rgb(252, 211, 77);
-  --app-secondary-foreground-color: rgb(55, 65, 81);
-  --app-accent-color: rgb(110, 231, 183);
-  --app-accent-foreground-color: rgb(55, 65, 81);
-  --app-text-color: rgb(55, 65, 81);
-  --app-bg-color: rgb(249, 250, 251);
-  --app-card-bg-color: rgb(255, 255, 255);
-  --app-border-color: rgb(209, 213, 219);
-  --app-bg-color-hover: rgb(210, 210, 210);
-  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
-  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
-
-  /* Raw RGB values for Tailwind CSS opacity modifiers */
-  --app-primary-color-raw: 16, 185, 129;
-  --app-primary-foreground-color-raw: 255, 255, 255;
-  --app-secondary-color-raw: 252, 211, 77;
-  --app-secondary-foreground-color-raw: 55, 65, 81;
-  --app-accent-color-raw: 110, 231, 183;
-  --app-accent-foreground-color-raw: 55, 65, 81;
-  --app-text-color-raw: 55, 65, 81;
-  --app-bg-color-raw: 249, 250, 251;
-  --app-card-bg-color-raw: 255, 255, 255;
-  --app-border-color-raw: 209, 213, 219;
-  --app-bg-color-hover-raw: 210, 210, 210;
-  --app-danger-color-raw: 220, 38, 38;
-  --app-danger-foreground-color-raw: 255, 255, 255;
-}
-
-/* Midnight Theme */
-.midnight {
-  /* Font Variables */
-  --app-font-sans: 'Roboto Mono', monospace;
-  --app-font-serif: 'Lora', serif;
-
-  /* Color Variables */
-  --app-primary-color: rgb(129, 140, 248);
-  --app-primary-foreground-color: rgb(255, 255, 255);
-  --app-secondary-color: rgb(192, 132, 252);
-  --app-secondary-foreground-color: rgb(15, 23, 42);
-  --app-accent-color: rgb(99, 102, 241);
-  --app-accent-foreground-color: rgb(255, 255, 255);
-  --app-text-color: rgb(226, 232, 240);
-  --app-bg-color: rgb(15, 23, 42);
-  --app-card-bg-color: rgb(30, 41, 59);
-  --app-border-color: rgb(71, 85, 105);
-  --app-bg-color-hover: rgb(42, 42, 42);
-  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
-  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
-
-  /* Raw RGB values for Tailwind CSS opacity modifiers */
-  --app-primary-color-raw: 129, 140, 248;
-  --app-primary-foreground-color-raw: 255, 255, 255;
-  --app-secondary-color-raw: 192, 132, 252;
-  --app-secondary-foreground-color-raw: 15, 23, 42;
-  --app-accent-color-raw: 99, 102, 241;
-  --app-accent-foreground-color-raw: 255, 255, 255;
-  --app-text-color-raw: 226, 232, 240;
-  --app-bg-color-raw: 15, 23, 42;
-  --app-card-bg-color-raw: 30, 41, 59;
-  --app-border-color-raw: 71, 85, 105;
-  --app-bg-color-hover-raw: 42, 42, 42;
-  --app-danger-color-raw: 220, 38, 38;
-  --app-danger-foreground-color-raw: 255, 255, 255;
-}
-
-/* Blueprint Theme */
-.blueprint {
-  /* Font Variables */
-  --app-font-sans: 'Courier New', Courier, monospace;
-  --app-font-serif: 'Times New Roman', Times, serif;
-
-  /* Color Variables */
-  --app-primary-color: rgb(51, 51, 51);
-  --app-primary-foreground-color: rgb(255, 255, 255);
-  --app-secondary-color: rgb(125, 125, 125);
-  --app-secondary-foreground-color: rgb(255, 255, 255);
-  --app-accent-color: rgb(0, 0, 0);
-  --app-accent-foreground-color: rgb(255, 255, 255);
-  --app-text-color: rgb(0, 0, 0);
-  --app-bg-color: rgb(255, 255, 255);
-  --app-card-bg-color: rgb(255, 255, 255);
-  --app-border-color: rgb(194, 194, 194);
-  --app-bg-color-hover: rgb(230, 230, 230);
-  --app-danger-color: rgb(220, 38, 38);         /* red-600 */
-  --app-danger-foreground-color: rgb(255, 255, 255); /* white */
-
-  /* Raw RGB values for Tailwind CSS opacity modifiers */
-  --app-primary-color-raw: 51, 51, 51;
-  --app-primary-foreground-color-raw: 255, 255, 255;
-  --app-secondary-color-raw: 125, 125, 125;
-  --app-secondary-foreground-color-raw: 255, 255, 255;
-  --app-accent-color-raw: 0, 0, 0;
-  --app-accent-foreground-color-raw: 255, 255, 255;
-  --app-text-color-raw: 0, 0, 0;
-  --app-bg-color-raw: 255, 255, 255;
-  --app-card-bg-color-raw: 255, 255, 255;
-  --app-border-color-raw: 194, 194, 194;
-  --app-bg-color-hover-raw: 230, 230, 230;
-  --app-danger-color-raw: 220, 38, 38;
-  --app-danger-foreground-color-raw: 255, 255, 255;
-}
-
-
-/* --- AG Grid Theme Overrides --- */
-/* This targets the "ag-theme-quartz" class used in our DataTable component */
-/* and overrides its default CSS variables with our own application theme variables. */
-
-:root .ag-theme-quartz {
-  /* General */
-  --ag-font-family: var(--app-font-sans);
-  --ag-font-size: 14px;
-  --ag-background-color: var(--app-card-bg-color);
-  --ag-foreground-color: var(--app-text-color);
-  
-  /* Borders */
-  --ag-border-color: var(--app-border-color);
-  --ag-secondary-border-color: var(--app-border-color);
-
-  /* Header */
-  --ag-header-background-color: var(--app-bg-color);
-  --ag-header-foreground-color: var(--app-text-color);
-  
-  /* Rows */
-  --ag-odd-row-background-color: var(--app-bg-color);
-  --ag-even-row-background-color: var(--app-card-bg-color);
-  --ag-row-hover-color: var(--app-bg-color-hover);
-  
-  /* Interactivity */
-  --ag-selected-row-background-color: var(--app-primary-color);
-  --ag-selected-row-foreground-color: var(--app-primary-foreground-color);
-  --ag-range-selection-background-color: rgba(var(--app-primary-color-raw), 0.2);
-  --ag-active-color: var(--app-accent-color);
-
-}
-
-
-/* Custom Tippy.js theme to match the Fanta Frontend design system.
-  This file should be imported into your main CSS entry point.
+/*
+==============================================
+BODEWELL THEME V2.0 - CSS VARIABLE DEFINITIONS
+==============================================
+- The :root selector defines the default 'light' theme.
+- Each subsequent theme class overrides these variables.
 */
 
-.tippy-box[data-theme~='fanta'] {
-  background-color: var(--app-primary-color);
-  color: white;
-  border-radius: 6px;
-  font-size: 0.875rem; /* 14px */
-  line-height: 1.25rem; /* 20px */
-  /* Use a filter for a cleaner shadow that includes the arrow */
+:root {
+  /* === LAYER 1: BRAND IDENTITY === */
+  --app-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --app-font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+  --app-font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  /* === LAYER 2: COLOR SYSTEM === */
+  --app-primary-color: 13 110 253;
+  --app-primary-foreground-color: 255 255 255;
+  --app-secondary-color: 108 117 125;
+  --app-secondary-foreground-color: 255 255 255;
+  --app-accent-color: 23 162 184;
+  --app-accent-foreground-color: 255 255 255;
+  --app-danger-color: 220 53 69;
+  --app-danger-foreground-color: 255 255 255;
+  --app-text-color: 33 37 41;
+  --app-bg-color: 248 249 250;
+  --app-card-bg-color: 255 255 255;
+  --app-border-color: 222 226 230;
+  
+  /* === LAYER 3: SHAPE & BORDERS === */
+  --app-border-radius-sm: 0.2rem;
+  --app-border-radius-md: 0.375rem;
+  --app-border-radius-lg: 0.5rem;
+  --app-border-radius-full: 9999px;
+  --app-border-width: 1px;
+
+  /* === LAYER 4: FORM CONTROLS === */
+  --app-input-bg-color: 255 255 255;
+  --app-input-text-color: 33 37 41;
+  --app-input-border-color: 206 212 218;
+  --app-input-focus-ring-color: 13 110 253;
+  --app-input-placeholder-color: 108 117 125;
+
+  /* === LAYER 5: COMPONENT-SPECIFIC STYLES === */
+  --app-table-header-bg: 248 249 250;
+  --app-table-header-text: 73 80 87;
+  --app-table-row-hover-bg: 233 236 239;
+  --app-table-grid-line-color: 222 226 230;
+  --app-chart-palette: 13 110 253, 108 117 125, 23 162 184, 255 193 7, 220 53 69;
+  --app-chart-grid-color: 233 236 239;
+  
+}
+
+/* --- Dark Theme --- */
+.dark {
+  --app-primary-color: 110 168 254;
+  --app-primary-foreground-color: 5 20 40;
+  --app-secondary-color: 173 181 189;
+  --app-secondary-foreground-color: 5 20 40;
+  --app-accent-color: 77 189 207;
+  --app-accent-foreground-color: 5 20 40;
+  --app-text-color: 233 236 239;
+  --app-bg-color: 11 17 23;
+  --app-card-bg-color: 26 35 46;
+  --app-border-color: 73 80 87;
+  
+  --app-input-bg-color: 33 37 41;
+  --app-input-text-color: 233 236 239;
+  --app-input-border-color: 73 80 87;
+  --app-input-focus-ring-color: 110 168 254;
+  --app-input-placeholder-color: 173 181 189;
+
+  --app-table-header-bg: 33 37 41;
+  --app-table-header-text: 206 212 218;
+  --app-table-row-hover-bg: 52 58 64;
+  --app-table-grid-line-color: 73 80 87;
+  --app-chart-palette: 110 168 254, 173 181 189, 77 189 207, 255 193 7, 220 53 69;
+  --app-chart-grid-color: 52 58 64;
+}
+
+/* --- Corporate Theme --- */
+.corporate {
+  --app-font-sans: 'Lato', sans-serif;
+  --app-font-serif: 'Merriweather', serif;
+  --app-primary-color: 16 185 129;
+  --app-primary-foreground-color: 255 255 255;
+  --app-secondary-color: 245 158 11;
+  --app-secondary-foreground-color: 255 255 255;
+  --app-accent-color: 59 130 246;
+  --app-accent-foreground-color: 255 255 255;
+  --app-text-color: 55 65 81;
+  --app-bg-color: 249 250 251;
+  --app-card-bg-color: 255 255 255;
+  --app-border-color: 209 213 219;
+
+  --app-border-radius-md: 0.25rem; /* Sharper corners */
+
+  --app-input-bg-color: 255 255 255;
+  --app-input-text-color: 55 65 81;
+  --app-input-border-color: 209 213 219;
+  --app-input-focus-ring-color: 59 130 246;
+  --app-input-placeholder-color: 156 163 175;
+
+  --app-table-header-bg: 243 244 246;
+  --app-table-header-text: 75 85 99;
+  --app-table-row-hover-bg: 229 231 235;
+  --app-table-grid-line-color: 209 213 219;
+  --app-chart-grid-color: 229 231 235;
+}
+
+/* --- Midnight Theme --- */
+.midnight {
+  --app-font-sans: 'Roboto Mono', monospace;
+  --app-primary-color: 129 140 248;
+  --app-primary-foreground-color: 30 41 59;
+  --app-secondary-color: 192 132 252;
+  --app-secondary-foreground-color: 30 41 59;
+  --app-accent-color: 99 102 241;
+  --app-accent-foreground-color: 255 255 255;
+  --app-text-color: 226 232 240;
+  --app-bg-color: 15 23 42;
+  --app-card-bg-color: 30 41 59;
+  --app-border-color: 71 85 105;
+
+  --app-border-radius-md: 0.5rem; /* More rounded */
+
+  --app-input-bg-color: 51 65 85;
+  --app-input-text-color: 226 232 240;
+  --app-input-border-color: 71 85 105;
+  --app-input-focus-ring-color: 129 140 248;
+  --app-input-placeholder-color: 148 163 184;
+
+  --app-table-header-bg: 51 65 85;
+  --app-table-header-text: 203 213 225;
+  --app-table-row-hover-bg: 71 85 105;
+  --app-table-grid-line-color: 71 85 105;
+  --app-chart-grid-color: 51 65 85;
+}
+
+/* --- Blueprint Theme --- */
+.blueprint {
+  --app-font-sans: 'Courier New', monospace;
+  --app-primary-color: 0 123 255;
+  --app-primary-foreground-color: 255 255 255;
+  --app-secondary-color: 108 117 125;
+  --app-secondary-foreground-color: 255 255 255;
+  --app-accent-color: 23 162 184;
+  --app-accent-foreground-color: 255 255 255;
+  --app-text-color: 51 51 51;
+  --app-bg-color: 255 255 255;
+  --app-card-bg-color: 255 255 255;
+  --app-border-color: 0 123 255;
+
+  --app-border-radius-md: 0rem; /* No border radius */
+  --app-border-width: 2px;
+
+  --app-input-bg-color: 255 255 255;
+  --app-input-text-color: 51 51 51;
+  --app-input-border-color: 0 123 255;
+  --app-input-focus-ring-color: 0 123 255;
+  --app-input-placeholder-color: 108 117 125;
+  
+  --app-table-header-bg: 248 249 250;
+  --app-table-header-text: 73 80 87;
+  --app-table-row-hover-bg: 230 230 230;
+  --app-table-grid-line-color: 0 123 255;
+  --app-chart-grid-color: 230 242 255; /* approx. rgba(0, 123, 255, 0.1) on white */
+}
+
+/* --- AG Grid Theme Overrides --- */
+:root .ag-theme-quartz {
+  --ag-font-family: var(--app-font-sans);
+  --ag-background-color: rgb(var(--app-card-bg-color));
+  --ag-foreground-color: rgb(var(--app-text-color));
+  --ag-border-color: transparent;
+  --ag-secondary-border-color: rgb(var(--app-table-grid-line-color));
+  --ag-header-background-color: rgb(var(--app-table-header-bg));
+  --ag-header-foreground-color: rgb(var(--app-table-header-text));
+  --ag-odd-row-background-color: rgb(var(--app-card-bg-color));
+  --ag-row-hover-color: rgb(var(--app-table-row-hover-bg));
+  --ag-selected-row-background-color: rgb(var(--app-primary-color));
+  --ag-selected-row-foreground-color: rgb(var(--app-primary-foreground-color));
+  --ag-range-selection-background-color: rgba(var(--app-primary-color), 0.2);
+}
+
+/* --- Custom Tippy.js Theme --- */
+.tippy-box[data-theme~='bodewell'] {
+  background-color: rgb(var(--app-secondary-color));
+  color: rgb(var(--app-secondary-foreground-color));
+  border-radius: var(--app-border-radius-md);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
 }
-
-.tippy-box[data-theme~='fanta'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: var(--app-primary-color);
-}
-.tippy-box[data-theme~='fanta'][data-placement^='bottom'] > .tippy-arrow::before {
-  border-bottom-color: var(--app-primary-color);
-}
-.tippy-box[data-theme~='fanta'][data-placement^='left'] > .tippy-arrow::before {
-  border-left-color: var(--app-primary-color);
-}
-.tippy-box[data-theme~='fanta'][data-placement^='right'] > .tippy-arrow::before {
-  border-right-color: var(--app-primary-color);
-}
-
-.tippy-content {
-  padding: 0.5rem 0.75rem;
-}
-
+.tippy-box[data-theme~='bodewell'][data-placement^='top'] > .tippy-arrow::before { border-top-color: rgb(var(--app-secondary-color)); }
+.tippy-box[data-theme~='bodewell'][data-placement^='bottom'] > .tippy-arrow::before { border-bottom-color: rgb(var(--app-secondary-color)); }
+.tippy-box[data-theme~='bodewell'][data-placement^='left'] > .tippy-arrow::before { border-left-color: rgb(var(--app-secondary-color)); }
+.tippy-box[data-theme~='bodewell'][data-placement^='right'] > .tippy-arrow::before { border-right-color: rgb(var(--app-secondary-color)); }
+.tippy-content { padding: 0.5rem 0.75rem; }
 
 
 /* --- Custom React Datepicker Theme --- */
-
 .react-datepicker {
-  background-color: var(--app-card-bg-color);
-  border-color: var(--app-border-color);
-  color: var(--app-text-color);
+  font-family: var(--app-font-sans);
+  background-color: rgb(var(--app-card-bg-color));
+  border: var(--app-border-width) solid rgb(var(--app-border-color));
+  color: rgb(var(--app-text-color));
 }
-
 .react-datepicker__header {
-  background-color: var(--app-bg-color);
-  border-bottom-color: var(--app-border-color);
+  background-color: rgb(var(--app-bg-color));
+  border-bottom: var(--app-border-width) solid rgb(var(--app-border-color));
 }
-
-.react-datepicker__current-month,
-.react-datepicker-time__header,
-.react-datepicker-year-header,
-.react-datepicker-month-header,
-.react-datepicker__day-name {
-  color: var(--app-text-color);
+.react-datepicker__current-month, .react-datepicker__day-name {
+  color: rgb(var(--app-text-color));
 }
-
 .react-datepicker__day {
-  color: var(--app-text-color);
+  color: rgb(var(--app-text-color));
 }
-
 .react-datepicker__day:hover {
-  background-color: rgba(var(--app-primary-color-raw), 0.1);
+  background-color: rgb(var(--app-table-row-hover-bg));
 }
-
-.react-datepicker__day--selected,
-.react-datepicker__day--keyboard-selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range {
-  background-color: var(--app-primary-color);
-  color: white;
+.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range {
+  background-color: rgb(var(--app-primary-color));
+  color: rgb(var(--app-primary-foreground-color));
 }
-
-.react-datepicker__day--selected:hover,
-.react-datepicker__day--keyboard-selected:hover,
-.react-datepicker__day--in-selecting-range:hover,
-.react-datepicker__day--in-range:hover {
-  background-color: var(--app-primary-color);
-}
-
 .react-datepicker__day--disabled {
-  color: rgba(var(--app-text-color-raw), 0.5);
+  opacity: 0.5;
 }
 
-/* Styles for the portal/popper */
-.react-datepicker-portal-light .react-datepicker__day--selected,
-.react-datepicker-portal-light .react-datepicker__day--keyboard-selected {
-  background-color: var(--app-primary-color);
-  color: white;
-}
 
-.react-datepicker-portal-dark .react-datepicker,
-.react-datepicker-portal-corporate .react-datepicker,
-.react-datepicker-portal-midnight .react-datepicker {
-  background-color: var(--app-card-bg-color);
-  border-color: var(--app-border-color);
-}
 
-.react-datepicker-portal-dark .react-datepicker__header,
-.react-datepicker-portal-corporate .react-datepicker__header,
-.react-datepicker-portal-midnight .react-datepicker__header {
-  background-color: var(--app-bg-color);
-  border-bottom-color: var(--app-border-color);
-}
 
-.react-datepicker-portal-dark .react-datepicker__current-month,
-.react-datepicker-portal-dark .react-datepicker-time__header,
-.react-datepicker-portal-dark .react-datepicker-year-header,
-.react-datepicker-portal-dark .react-datepicker-month-header,
-.react-datepicker-portal-dark .react-datepicker__day-name,
-.react-datepicker-portal-corporate .react-datepicker__current-month,
-.react-datepicker-portal-corporate .react-datepicker-time__header,
-.react-datepicker-portal-corporate .react-datepicker-year-header,
-.react-datepicker-portal-corporate .react-datepicker-month-header,
-.react-datepicker-portal-corporate .react-datepicker__day-name,
-.react-datepicker-portal-midnight .react-datepicker__current-month,
-.react-datepicker-portal-midnight .react-datepicker-time__header,
-.react-datepicker-portal-midnight .react-datepicker-year-header,
-.react-datepicker-portal-midnight .react-datepicker-month-header,
-.react-datepicker-portal-midnight .react-datepicker__day-name {
-  color: var(--app-text-color);
-}
 
-.react-datepicker-portal-dark .react-datepicker__day,
-.react-datepicker-portal-corporate .react-datepicker__day,
-.react-datepicker-portal-midnight .react-datepicker__day {
-  color: var(--app-text-color);
-}
 
-.react-datepicker-portal-dark .react-datepicker__day:hover,
-.react-datepicker-portal-corporate .react-datepicker__day:hover,
-.react-datepicker-portal-midnight .react-datepicker__day:hover {
-  background-color: rgba(var(--app-primary-color-raw), 0.1);
-}
 
-.react-datepicker-portal-dark .react-datepicker__day--selected,
-.react-datepicker-portal-dark .react-datepicker__day--keyboard-selected,
-.react-datepicker-portal-dark .react-datepicker__day--in-selecting-range,
-.react-datepicker-portal-dark .react-datepicker__day--in-range,
-.react-datepicker-portal-corporate .react-datepicker__day--selected,
-.react-datepicker-portal-corporate .react-datepicker__day--keyboard-selected,
-.react-datepicker-portal-corporate .react-datepicker__day--in-selecting-range,
-.react-datepicker-portal-corporate .react-datepicker__day--in-range,
-.react-datepicker-portal-midnight .react-datepicker__day--selected,
-.react-datepicker-portal-midnight .react-datepicker__day--keyboard-selected,
-.react-datepicker-portal-midnight .react-datepicker__day--in-selecting-range,
-.react-datepicker-portal-midnight .react-datepicker__day--in-range {
-  background-color: var(--app-primary-color);
-  color: white;
-}
 
-.react-datepicker-portal-dark .react-datepicker__day--selected:hover,
-.react-datepicker-portal-dark .react-datepicker__day--keyboard-selected:hover,
-.react-datepicker-portal-dark .react-datepicker__day--in-selecting-range:hover,
-.react-datepicker-portal-dark .react-datepicker__day--in-range:hover,
-.react-datepicker-portal-corporate .react-datepicker__day--selected:hover,
-.react-datepicker-portal-corporate .react-datepicker__day--keyboard-selected:hover,
-.react-datepicker-portal-corporate .react-datepicker__day--in-selecting-range:hover,
-.react-datepicker-portal-corporate .react-datepicker__day--in-range:hover,
-.react-datepicker-portal-midnight .react-datepicker__day--selected:hover,
-.react-datepicker-portal-midnight .react-datepicker__day--keyboard-selected:hover,
-.react-datepicker-portal-midnight .react-datepicker__day--in-selecting-range:hover,
-.react-datepicker-portal-midnight .react-datepicker__day--in-range:hover {
-  background-color: var(--app-primary-color);
-}

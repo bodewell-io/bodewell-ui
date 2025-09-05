@@ -6,8 +6,10 @@ import type { LucideProps, LucideIcon } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
 // Define the props for our custom Icon component
+export type IconName = keyof typeof dynamicIconImports;
+
 interface IconProps extends Omit<LucideProps, 'name'> {
-  name: keyof typeof dynamicIconImports;
+  name: IconName;
   className?: string;
 }
 
@@ -18,7 +20,7 @@ interface IconProps extends Omit<LucideProps, 'name'> {
  * @tags ui, graphics, svg, symbol
  * @props
  * - name: name
- * type: keyof typeof dynamicIconImports
+ * type: IconName
  * description: The specific name of the Lucide icon to display (e.g., 'user', 'settings', 'check').
  * - name: size
  * type: number | string
@@ -43,11 +45,15 @@ const IconComponent: React.FC<IconProps> = ({ name, className, ...props }) => {
   useEffect(() => {
     let isMounted = true;
     const importIcon = async () => {
-      // Dynamically import the icon
-      const module = await dynamicIconImports[name]();
-      if (isMounted) {
-        // Set the imported component into state
-        setImportedIcon(() => module.default);
+      try {
+        // Dynamically import the icon
+        const module = await dynamicIconImports[name]();
+        if (isMounted) {
+          // Set the imported component into state
+          setImportedIcon(() => module.default);
+        }
+      } catch (error) {
+          console.error(`Icon not found: ${name}`);
       }
     };
     importIcon();
@@ -64,7 +70,7 @@ const IconComponent: React.FC<IconProps> = ({ name, className, ...props }) => {
   }
 
   // Otherwise, render a fallback placeholder
-  return <span style={{ height: props.size || 24, width: props.size || 24 }} />;
+  return <span style={{ height: props.size || 24, width: props.size || 24, display: 'inline-block' }} />;
 };
 
 // Memoize the component to prevent re-renders if props haven't changed
