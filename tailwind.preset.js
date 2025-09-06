@@ -32,6 +32,31 @@ module.exports = {
           DEFAULT: 'rgb(var(--app-card-bg-color) / <alpha-value>)',
           foreground: 'rgb(var(--app-text-color) / <alpha-value>)',
         },
+        // ADDED: Notification Colors
+        info: {
+          DEFAULT: 'rgb(var(--app-info-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-info-foreground-color) / <alpha-value>)',
+        },
+        success: {
+          DEFAULT: 'rgb(var(--app-success-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-success-foreground-color) / <alpha-value>)',
+        },
+        warning: {
+          DEFAULT: 'rgb(var(--app-warning-color) / <alpha-value>)',
+          foreground: 'rgb(var(--app-warning-foreground-color) / <alpha-value>)',
+        },
+        error: {
+          DEFAULT: 'rgb(var(--app-danger-color) / <alpha-value>)', // Re-using danger for error
+          foreground: 'rgb(var(--app-danger-foreground-color) / <alpha-value>)',
+        },
+        // ADDED: Chart Colors
+        chart: {
+          1: 'rgb(var(--app-chart-1) / <alpha-value>)',
+          2: 'rgb(var(--app-chart-2) / <alpha-value>)',
+          3: 'rgb(var(--app-chart-3) / <alpha-value>)',
+          4: 'rgb(var(--app-chart-4) / <alpha-value>)',
+          5: 'rgb(var(--app-chart-5) / <alpha-value>)',
+        },
       },
       borderRadius: {
         lg: `var(--app-border-radius-lg)`,
@@ -42,7 +67,6 @@ module.exports = {
         sans: ['var(--app-font-sans)'],
         serif: ['var(--app-font-serif)'],
       },
-      // Added fontSize using the same CSS variable strategy
       fontSize: {
         xs: ['calc(var(--app-font-size-base) * 0.75)', { lineHeight: '1rem' }],
         sm: ['calc(var(--app-font-size-base) * 0.875)', { lineHeight: '1.25rem' }],
