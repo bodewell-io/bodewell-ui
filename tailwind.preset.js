@@ -42,6 +42,14 @@ module.exports = {
         sans: ['var(--app-font-sans)'],
         serif: ['var(--app-font-serif)'],
       },
+      // Added fontSize using the same CSS variable strategy
+      fontSize: {
+        xs: ['calc(var(--app-font-size-base) * 0.75)', { lineHeight: '1rem' }],
+        sm: ['calc(var(--app-font-size-base) * 0.875)', { lineHeight: '1.25rem' }],
+        base: ['var(--app-font-size-base)', { lineHeight: '1.5rem' }],
+        lg: ['calc(var(--app-font-size-base) * 1.125)', { lineHeight: '1.75rem' }],
+        xl: ['calc(var(--app-font-size-base) * 1.25)', { lineHeight: '1.75rem' }],
+      },
     },
   },
   plugins: [],

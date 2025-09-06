@@ -1,86 +1,136 @@
-'use client'; // <-- Add this line at the top
+'use client';
 
-/**
- * @wizard
- * @name ThemeProvider
- * @description Provides the global theme context to the application, enabling dynamic theme switching and persistence.
- * @tags context, theme, provider, global, utility
- * @props
- * - name: children
- * type: React.ReactNode
- * description: The application's UI components that will consume the theme context.
- * @category utility
- */
-import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react';
 
 export type ThemeName = 'light' | 'dark' | 'corporate' | 'midnight' | 'blueprint';
 
-// UPDATE 1: Moved availableThemes outside the component and exported it.
-export const availableThemes: ThemeName[] = ['light', 'dark', 'corporate', 'midnight', 'blueprint'];
+export const availableThemes: ThemeName[] = [
+  'light',
+  'dark',
+  'corporate',
+  'midnight',
+  'blueprint',
+];
 
 interface ThemeContextType {
   theme: ThemeName;
   availableThemes: ThemeName[];
   setTheme: (themeName: ThemeName) => void;
+  borderRadius: string;
+  setBorderRadius: (radius: string) => void;
+  fontSize: string;
+  setFontSize: (size: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  // --- Color Theme State ---
   const [theme, setThemeState] = useState<ThemeName>(() => {
     if (typeof window !== 'undefined') {
       const storedTheme = localStorage.getItem('theme') as ThemeName;
       if (storedTheme && availableThemes.includes(storedTheme)) {
         return storedTheme;
       }
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches && availableThemes.includes('dark')) {
+      if (
+        window.matchMedia('(prefers-color-scheme: dark)').matches &&
+        availableThemes.includes('dark')
+      ) {
         return 'dark';
       }
     }
     return 'light';
   });
 
+  // --- Border Radius State ---
+  const [borderRadius, setBorderRadiusState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('borderRadius') || '0.5rem';
+    }
+    return '0.5rem';
+  });
+
+  // --- Font Size State ---
+  const [fontSize, setFontSizeState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('fontSize') || '1rem';
+    }
+    return '1rem';
+  });
+
+  // --- State Setters with localStorage persistence ---
   const setTheme = useCallback((newTheme: ThemeName) => {
     if (!availableThemes.includes(newTheme)) {
       console.warn(`Attempted to set an unsupported theme: ${newTheme}`);
       return;
     }
     setThemeState(newTheme);
-localStorage.setItem('theme', newTheme);
-  }, []); // Dependency on availableThemes removed as it's now a constant defined outside
+    localStorage.setItem('theme', newTheme);
+  }, []);
 
+  const setBorderRadius = useCallback((radius: string) => {
+    setBorderRadiusState(radius);
+    localStorage.setItem('borderRadius', radius);
+  }, []);
+
+  const setFontSize = useCallback((size: string) => {
+    setFontSizeState(size);
+    localStorage.setItem('fontSize', size);
+  }, []);
+
+  // --- Effect to Apply Theme ---
   useEffect(() => {
     const root = document.documentElement;
-    // UPDATE 2: Safer class removal.
-    // Instead of root.className = '', we remove only the theme classes.
-    availableThemes.forEach(t => root.classList.remove(t));
+
+    // Handle color theme classes
+    availableThemes.forEach((t) => root.classList.remove(t));
     root.classList.add(theme);
-  }, [theme]);
+
+    // Handle CSS variables for other theme properties
+    root.style.setProperty('--app-border-radius-sm', `calc(${borderRadius} - 0.25rem)`);
+    root.style.setProperty('--app-border-radius-md', borderRadius);
+    root.style.setProperty('--app-border-radius-lg', `calc(${borderRadius} + 0.25rem)`);
+    
+    root.style.setProperty('--app-font-size-base', fontSize);
+
+  }, [theme, borderRadius, fontSize]);
+
+  // --- Memoized Context Value ---
+  const value = useMemo(
+    () => ({
+      theme,
+      availableThemes,
+      setTheme,
+      borderRadius,
+      setBorderRadius,
+      fontSize,
+      setFontSize,
+    }),
+    [
+      theme,
+      setTheme,
+      borderRadius,
+      setBorderRadius,
+      fontSize,
+      setFontSize,
+    ]
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, availableThemes, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
 
-/**
- * @wizard
- * @name useTheme
- * @description A React hook to access the current theme, available themes, and theme setter from the `ThemeProvider`.
- * @tags hook, theme, context, utility
- * @returns
- * - name: theme
- * type: ThemeName
- * description: The current active theme.
- * - name: availableThemes
- * type: ThemeName[]
- * description: An array of all theme names supported by the application.
- * - name: setTheme
- * type: (themeName: ThemeName) => void
- * description: A function to change the application's theme.
- * @category utility
- */
+// --- Custom Hook ---
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
