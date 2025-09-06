@@ -2,19 +2,12 @@ import { default as React } from 'react';
 import { IconName } from '../ui/Icon';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    /** An optional label to display above the input field. */
     label?: string;
-    /** An optional icon to display inside the input, on the left. */
     icon?: IconName;
-    /** A string that provides a hint or an error message below the input. */
     helperText?: string;
-    /** If true, the input will be styled to indicate an error. */
     error?: boolean;
-    /** If true, a required indicator (*) will be displayed next to the label. */
     required?: boolean;
-    /** If true, an "(optional)" indicator will be displayed next to the label. */
     showOptionalLabel?: boolean;
-    /** Optional additional CSS classes for the outer container. */
     containerClassName?: string;
 }
 /**

@@ -314,6 +314,59 @@ BODEWELL THEME V2.0 - CSS VARIABLE DEFINITIONS
   opacity: 0.5;
 }
 
+/* --- Custom React-Select Theme --- */
+.bodewell-select__control {
+  background-color: rgb(var(--app-input-bg-color)) !important;
+  border-color: rgb(var(--app-input-border-color)) !important;
+  box-shadow: none !important;
+  min-height: 40px;
+}
+
+.bodewell-select__control--is-focused {
+  border-color: rgb(var(--app-primary-color)) !important;
+  box-shadow: 0 0 0 1px rgb(var(--app-primary-color)) !important;
+}
+
+.bodewell-select__input-container,
+.bodewell-select__placeholder,
+.bodewell-select__single-value {
+  color: rgb(var(--app-text-color)) !important;
+}
+
+.bodewell-select__menu {
+  background-color: rgb(var(--app-card-bg-color)) !important;
+  border: 1px solid rgb(var(--app-border-color)) !important;
+}
+
+.bodewell-select__option {
+  background-color: transparent !important;
+  color: rgb(var(--app-text-color)) !important;
+}
+
+.bodewell-select__option--is-focused {
+  background-color: rgb(var(--app-accent-color)) !important;
+  color: rgb(var(--app-accent-foreground-color)) !important;
+}
+
+.bodewell-select__option--is-selected {
+  background-color: rgb(var(--app-primary-color)) !important;
+  color: rgb(var(--app-primary-foreground-color)) !important;
+}
+
+.bodewell-select__multi-value {
+  background-color: rgb(var(--app-secondary-color)) !important;
+  color: rgb(var(--app-secondary-foreground-color)) !important;
+}
+
+.bodewell-select__multi-value__label {
+  color: rgb(var(--app-secondary-foreground-color)) !important;
+}
+
+.bodewell-select__multi-value__remove:hover {
+  background-color: rgb(var(--app-danger-color)) !important;
+  color: rgb(var(--app-danger-foreground-color)) !important;
+}
+
 
 
 
