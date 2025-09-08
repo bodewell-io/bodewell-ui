@@ -1,8 +1,9 @@
+// src/navigation/Menu.tsx
+
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-// MenuDivider component (no changes needed)
 /**
  * @wizard
  * @name MenuDivider
@@ -14,7 +15,13 @@ const MenuDivider: React.FC = () => (
   <div className="my-1 h-px bg-border" role="separator" />
 );
 
-// MenuItem component
+interface MenuItemProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+}
+
 /**
  * @wizard
  * @name MenuItem
@@ -35,17 +42,11 @@ const MenuDivider: React.FC = () => (
  * description: An optional icon to display next to the menu item text.
  * @category navigation
  */
-interface MenuItemProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-}
-
 const MenuItem: React.FC<MenuItemProps> = ({ children, onClick, disabled, icon }) => {
-  const baseStyles = 'flex items-center w-full text-left px-4 py-2 text-sm cursor-pointer transition-colors duration-150 ease-in-out whitespace-nowrap';
-  // Replaced 'hover:bg-blue-500' with the theme-aware 'hover:bg-bg-hover'
-  const themeStyles = 'hover:bg-bg-hover text-text';
+  // FIX: Refined padding and added rounded corners for a better hover effect.
+  const baseStyles = 'flex items-center w-full text-left px-3 py-1.5 text-sm cursor-pointer transition-colors duration-150 ease-in-out whitespace-nowrap rounded-md';
+  // FIX: Enhanced hover state with both background and text color changes.
+  const themeStyles = 'hover:bg-accent hover:text-accent-foreground text-text';
   const disabledStyles = 'opacity-50 cursor-not-allowed';
 
   return (
@@ -55,21 +56,19 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, onClick, disabled, icon }
       className={`${baseStyles} ${themeStyles} ${disabled ? disabledStyles : ''}`}
       role="menuitem"
     >
-      {icon && <span className="mr-3 h-4 w-4 text-muted-foreground">{icon}</span>}
+      {/* FIX: Reduced icon size and margin for tighter alignment. */}
+      {icon && <span className="mr-2 h-3.5 w-3.5 text-muted-foreground">{icon}</span>}
       {children}
     </button>
   );
 };
 
-// Menu component props (no changes needed)
 interface MenuProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
   position?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 }
 
-
-// Menu Component
 /**
  * @wizard
  * @name Menu
@@ -94,17 +93,12 @@ const Menu: React.FC<MenuProps> = ({ trigger, children, position = 'bottom-right
   const closeTimerRef = useRef<number | null>(null);
 
   const handleMouseEnter = () => {
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-    }
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     setIsOpen(true);
   };
 
   const handleMouseLeave = () => {
-    // Removed the debugger statement
-    closeTimerRef.current = window.setTimeout(() => {
-      setIsOpen(false);
-    }, 150);
+    closeTimerRef.current = window.setTimeout(() => setIsOpen(false), 150);
   };
 
   const toggleMenu = useCallback(() => setIsOpen((prev) => !prev), []);
@@ -146,16 +140,15 @@ const Menu: React.FC<MenuProps> = ({ trigger, children, position = 'bottom-right
       <div onClick={toggleMenu} className="cursor-pointer">
         {trigger}
       </div>
-
       {isOpen && (
         <div
           onMouseEnter={handleMouseEnter}
           className={`origin-top-right absolute z-50 rounded-md shadow-lg bg-card border border-border ring-1 ring-black ring-opacity-5 focus:outline-none min-w-[12rem] w-max ${getPositionClasses()}`}
           role="menu"
           aria-orientation="vertical"
-          aria-labelledby="menu-button"
         >
-          <div className="py-4" role="none">
+          {/* FIX: Reduced vertical padding from py-4 to py-2 for a tighter look. */}
+          <div className="p-2" role="none">
             {children}
           </div>
         </div>
@@ -163,6 +156,5 @@ const Menu: React.FC<MenuProps> = ({ trigger, children, position = 'bottom-right
     </div>
   );
 };
-
 
 export { Menu, MenuItem, MenuDivider };

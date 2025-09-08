@@ -1,12 +1,14 @@
+// src/navigation/Breadcrumbs.tsx
+
 import React from 'react';
-import { Link } from 'react-router-dom'; // For routing capabilities
+import { Link } from 'react-router-dom';
 
 interface BreadcrumbItemProps {
-  label: React.ReactNode; // Can be string or JSX
-  to?: string; // Optional path for navigation (makes it a link)
-  isCurrent?: boolean; // If this is the current, active page
-  className?: string; // Additional classes for the individual item
-  icon?: React.ReactNode; // <-- New optional icon prop
+  label: React.ReactNode;
+  to?: string;
+  isCurrent?: boolean;
+  className?: string;
+  icon?: React.ReactNode;
 }
 
 /**
@@ -32,15 +34,15 @@ interface BreadcrumbItemProps {
  * description: Additional CSS classes for custom styling of the individual item.
  * @category navigation
  */
-
-const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ label, to, isCurrent, className, icon }) => { // <-- Destructure icon
+const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ label, to, isCurrent, className, icon }) => {
   const baseStyles = 'inline-flex items-center text-sm font-medium';
   const themeStyles = isCurrent ? 'text-text' : 'text-primary hover:text-secondary';
-  const separatorStyles = 'ml-2 text-muted-foreground'; // Changed to muted-foreground for better contrast
+  const separatorStyles = 'ml-2 text-muted-foreground';
 
   const content = (
     <>
-      {icon && <span className="mr-2 h-4 w-4">{icon}</span>} {/* <-- Render icon */}
+      {/* FIX: Reduced icon size for better alignment with text */}
+      {icon && <span className="mr-1.5 h-3.5 w-3.5">{icon}</span>}
       {label}
     </>
   );
@@ -78,7 +80,6 @@ interface BreadcrumbsProps {
  * description: Additional CSS classes for custom styling of the breadcrumbs container.
  * @category navigation
  */
-
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ children, className }) => {
   return (
     <nav className={`flex ${className || ''}`} aria-label="Breadcrumb">

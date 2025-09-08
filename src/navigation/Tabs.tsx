@@ -1,8 +1,9 @@
+// src/navigation/Tabs.tsx
+
 'use client';
 
 import React, { useState, useCallback, useMemo } from 'react';
 
-// TabPanel Component
 export interface TabPanelProps {
   id: string;
   label: string;
@@ -30,12 +31,10 @@ export interface TabPanelProps {
  * description: An optional icon to display next to the tab label in the header.
  * @category navigation
  */
-
 export const TabPanel: React.FC<TabPanelProps> = ({ children }) => {
   return <div role="tabpanel" className="p-4 bg-card rounded-b-lg border border-t-0 border-border">{children}</div>;
 };
 
-// Tabs Component
 export interface TabsProps {
   children: React.ReactElement<TabPanelProps>[];
   defaultActiveTab?: string;
@@ -59,24 +58,17 @@ export interface TabsProps {
  * description: Additional CSS classes for custom styling of the tabs container.
  * @category navigation
  */
-
 export const Tabs: React.FC<TabsProps> = ({ children, defaultActiveTab, className }) => {
   const initialActiveTab = useMemo(() => {
-    if (defaultActiveTab) {
-      return defaultActiveTab;
-    }
+    if (defaultActiveTab) return defaultActiveTab;
     return children.length > 0 ? children[0].props.id : '';
   }, [children, defaultActiveTab]);
 
   const [activeTab, setActiveTab] = useState<string>(initialActiveTab);
-
-  const handleTabClick = useCallback((tabId: string) => {
-    setActiveTab(tabId);
-  }, []);
+  const handleTabClick = useCallback((tabId: string) => setActiveTab(tabId), []);
 
   return (
     <div className={className}>
-      {/* Tab Headers */}
       <div className="flex border-b border-border mb-px" role="tablist">
         {children.map((tab) => (
           <button
@@ -92,13 +84,12 @@ export const Tabs: React.FC<TabsProps> = ({ children, defaultActiveTab, classNam
                 : 'border-transparent hover:border-border'
             }`}
           >
-            {tab.props.icon && <span className="mr-2 h-5 w-5">{tab.props.icon}</span>}
+            {/* FIX: Reduced icon size from h-5/w-5 to h-4/w-4 */}
+            {tab.props.icon && <span className="mr-2 h-4 w-4">{tab.props.icon}</span>}
             {tab.props.label}
           </button>
         ))}
       </div>
-
-      {/* Tab Panels */}
       {children.find((tab) => tab.props.id === activeTab)}
     </div>
   );
