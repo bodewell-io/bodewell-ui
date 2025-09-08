@@ -1,5 +1,3 @@
-// src/navigation/Breadcrumbs.tsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -39,10 +37,17 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ label, to, isCurrent, c
   const themeStyles = isCurrent ? 'text-text' : 'text-primary hover:text-secondary';
   const separatorStyles = 'ml-2 text-muted-foreground';
 
+  // FIX: Cloned the icon to pass size and className props directly, removing the span wrapper.
+  const iconElement = icon && React.isValidElement(icon)
+    ? React.cloneElement(icon as React.ReactElement<any>, {
+        size: 14, // This is equivalent to Tailwind's h-3.5/w-3.5
+        className: 'mr-1.5',
+      })
+    : null;
+
   const content = (
     <>
-      {/* FIX: Reduced icon size for better alignment with text */}
-      {icon && <span className="mr-1.5 h-3.5 w-3.5">{icon}</span>}
+      {iconElement}
       {label}
     </>
   );

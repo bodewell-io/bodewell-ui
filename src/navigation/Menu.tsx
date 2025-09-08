@@ -1,5 +1,3 @@
-// src/navigation/Menu.tsx
-
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
@@ -43,11 +41,17 @@ interface MenuItemProps {
  * @category navigation
  */
 const MenuItem: React.FC<MenuItemProps> = ({ children, onClick, disabled, icon }) => {
-  // FIX: Refined padding and added rounded corners for a better hover effect.
   const baseStyles = 'flex items-center w-full text-left px-3 py-1.5 text-sm cursor-pointer transition-colors duration-150 ease-in-out whitespace-nowrap rounded-md';
-  // FIX: Enhanced hover state with both background and text color changes.
   const themeStyles = 'hover:bg-accent hover:text-accent-foreground text-text';
   const disabledStyles = 'opacity-50 cursor-not-allowed';
+
+  // FIX: Cloned the icon to pass size and className props directly.
+  const iconElement = icon && React.isValidElement(icon)
+    ? React.cloneElement(icon as React.ReactElement<any>, {
+        size: 14,
+        className: 'mr-2 text-muted-foreground',
+      })
+    : null;
 
   return (
     <button
@@ -56,8 +60,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ children, onClick, disabled, icon }
       className={`${baseStyles} ${themeStyles} ${disabled ? disabledStyles : ''}`}
       role="menuitem"
     >
-      {/* FIX: Reduced icon size and margin for tighter alignment. */}
-      {icon && <span className="mr-2 h-3.5 w-3.5 text-muted-foreground">{icon}</span>}
+      {iconElement}
       {children}
     </button>
   );
@@ -147,7 +150,6 @@ const Menu: React.FC<MenuProps> = ({ trigger, children, position = 'bottom-right
           role="menu"
           aria-orientation="vertical"
         >
-          {/* FIX: Reduced vertical padding from py-4 to py-2 for a tighter look. */}
           <div className="p-2" role="none">
             {children}
           </div>

@@ -1,5 +1,3 @@
-// src/navigation/Tabs.tsx
-
 'use client';
 
 import React, { useState, useCallback, useMemo } from 'react';
@@ -70,25 +68,35 @@ export const Tabs: React.FC<TabsProps> = ({ children, defaultActiveTab, classNam
   return (
     <div className={className}>
       <div className="flex border-b border-border mb-px" role="tablist">
-        {children.map((tab) => (
-          <button
-            key={tab.props.id}
-            id={`tab-${tab.props.id}`}
-            role="tab"
-            aria-controls={tab.props.id}
-            aria-selected={activeTab === tab.props.id}
-            onClick={() => handleTabClick(tab.props.id)}
-            className={`inline-flex items-center px-4 py-2 text-text text-lg font-medium border-b-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-              activeTab === tab.props.id
-                ? 'border-primary'
-                : 'border-transparent hover:border-border'
-            }`}
-          >
-            {/* FIX: Reduced icon size from h-5/w-5 to h-4/w-4 */}
-            {tab.props.icon && <span className="mr-2 h-4 w-4">{tab.props.icon}</span>}
-            {tab.props.label}
-          </button>
-        ))}
+        {children.map((tab) => {
+          // FIX: Cloned the icon to pass size and className props directly.
+          const icon = tab.props.icon;
+          const iconElement = icon && React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement<any>, {
+                size: 16, // Equivalent to h-4/w-4
+                className: 'mr-2',
+              })
+            : null;
+
+          return (
+            <button
+              key={tab.props.id}
+              id={`tab-${tab.props.id}`}
+              role="tab"
+              aria-controls={tab.props.id}
+              aria-selected={activeTab === tab.props.id}
+              onClick={() => handleTabClick(tab.props.id)}
+              className={`inline-flex items-center px-4 py-2 text-text text-lg font-medium border-b-2 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                activeTab === tab.props.id
+                  ? 'border-primary'
+                  : 'border-transparent hover:border-border'
+              }`}
+            >
+              {iconElement}
+              {tab.props.label}
+            </button>
+          )
+        })}
       </div>
       {children.find((tab) => tab.props.id === activeTab)}
     </div>
