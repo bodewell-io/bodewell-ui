@@ -1,7 +1,8 @@
+// src/feedback/Toast.tsx
+
 "use client";
 
 import React, { useEffect } from 'react';
-import { Card } from '../layout/Card';
 import { Icon, type IconName } from '../ui/Icon';
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
@@ -64,7 +65,6 @@ export const Toast: React.FC<ToastProps> = ({
     }
   }, [id, duration, onDismiss]);
 
-  // Use theme-aware utilities for styling
   const typeStyles: Record<ToastType, { bg: string; icon: IconName }> = {
     info: { bg: 'bg-primary text-primary-foreground', icon: 'info' },
     success: { bg: 'bg-accent text-accent-foreground', icon: 'check-circle' },
@@ -73,10 +73,9 @@ export const Toast: React.FC<ToastProps> = ({
   };
 
   return (
-    // FIX: `padding` and `border` props removed from Card
-    <Card
+    <div
       className={cn(
-        'flex items-center w-full max-w-sm overflow-hidden shadow-lg pointer-events-auto',
+        'flex items-center w-full max-w-sm overflow-hidden rounded-lg shadow-lg pointer-events-auto',
         typeStyles[type].bg
       )}
     >
@@ -94,6 +93,6 @@ export const Toast: React.FC<ToastProps> = ({
       >
         <Icon name="x" size={18} />
       </button>
-    </Card>
+    </div>
   );
 };
