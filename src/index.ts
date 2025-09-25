@@ -77,12 +77,12 @@ export * from './layout/Card';
 export * from './layout/Drawer';
 export * from './layout/List';
 export * from './layout/Modal';
+export * from './layout/Sidebar'; 
 
 // navigation
 export * from './navigation/Breadcrumbs';
 export * from './navigation/Menu';
 export * from './navigation/Pagination';
-export * from './navigation/SideNav';
 export * from './navigation/Stepper';
 export * from './navigation/Tabs';
 
