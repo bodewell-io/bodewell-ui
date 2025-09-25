@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { NavLink } from 'react-router-dom';
+// Note: We no longer import NavLink here
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Button } from '../ui/Button';
 import { Icon } from '../ui/Icon';
@@ -103,16 +103,18 @@ interface SidebarMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   tooltip?: string;
   href?: string;
   isActive?: boolean;
+  as?: React.ElementType; // <-- ADD THIS PROP
 }
 
 const SidebarMenuItem = React.forwardRef<HTMLDivElement, SidebarMenuItemProps>(
-  ({ className, children, icon, badge, tooltip, href = '#', isActive, ...props }, ref) => {
+  ({ className, children, icon, badge, tooltip, href = '#', isActive, as: Component = 'a', ...props }, ref) => {
     const { isOpen } = useSidebar();
 
     const content = (
-      <NavLink
-        to={href}
-        className={({ isActive: isNavLinkActive }) =>
+      <Component
+        to={href} // Pass 'to' for NavLink compatibility
+        href={href} // Pass 'href' for standard 'a' tags
+        className={({ isActive: isNavLinkActive }: { isActive?: boolean } = {}) =>
           cn(
             'group flex items-center h-10 px-3 rounded-md transition-colors duration-200',
             'text-muted-foreground hover:bg-muted hover:text-foreground',
@@ -127,7 +129,7 @@ const SidebarMenuItem = React.forwardRef<HTMLDivElement, SidebarMenuItemProps>(
           {children}
         </span>
         {badge && <div className={cn('ml-auto transition-opacity duration-200', !isOpen && 'opacity-0')}>{badge}</div>}
-      </NavLink>
+      </Component>
     );
 
     return (
