@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-// Note: We no longer import NavLink here
+// Note: NavLink is no longer imported here
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Button } from '../ui/Button';
 import { Icon } from '../ui/Icon';
@@ -103,7 +103,7 @@ interface SidebarMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   tooltip?: string;
   href?: string;
   isActive?: boolean;
-  as?: React.ElementType; // <-- ADD THIS PROP
+  as?: React.ElementType; // <-- THE NEW PROP
 }
 
 const SidebarMenuItem = React.forwardRef<HTMLDivElement, SidebarMenuItemProps>(
