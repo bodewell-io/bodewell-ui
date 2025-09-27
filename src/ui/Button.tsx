@@ -1,10 +1,7 @@
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Icon, type IconName } from './Icon';
-
-const cn = (...classes: (string | undefined | null | false)[]) => {
-  return classes.filter(Boolean).join(' ');
-};
+import { cn } from '../utils/cn';
 
 // Define button styles and variants using cva
 const buttonVariants = cva(
@@ -52,6 +49,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       size,
       children,
+      // Destructure these props so they aren't passed to the button
       loading,
       iconLeft,
       iconRight,
@@ -63,7 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        disabled={loading}
+        disabled={loading || props.disabled}
         {...props}
       >
         {loading && <Icon name="loader-circle" className="animate-spin mr-2" />}

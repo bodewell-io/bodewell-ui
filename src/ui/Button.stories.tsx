@@ -49,7 +49,6 @@ export const WithIconLeft: Story = {
   args: {
     variant: 'primary',
     children: 'Login',
-    // FIX: Pass the icon name as a string, not a component
     iconLeft: 'log-in',
   },
 };
@@ -66,7 +65,6 @@ export const IconOnly: Story = {
   args: {
     variant: 'ghost',
     size: 'icon',
-    // FIX: Pass the icon name as a string, not a component
     iconLeft: 'settings',
   },
 };

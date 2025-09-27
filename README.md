@@ -8,28 +8,43 @@ The strategic focus of Bodewell is to make the common 80% of application develop
 
 ---
 
-## Features
+## Quick Start
 
-* A comprehensive, clean, and reusable UI component library.
-* A rich set of components covering forms, data display, charts, layout, feedback, and navigation.
-* Designed to be the visual foundation of the Bodewell ecosystem.
+While you can install `@bodewell/ui` in any React project, the recommended way to get started is with our official starter kit. This will create a new project with Bodewell UI, Vite, React, and Tailwind CSS all pre-configured.
+
+Run the following command in your terminal:
+
+```bash
+npm create bodewell-app@latest your-project-name
+```
 
 ---
 
-## Quick Start
+## Local Development & Storybook
 
-While you can install `@bodewell/ui` in any React project, the recommended way to get started is with our official starter kit, `bodewell-app-starter`.
+If you want to contribute to the Bodewell UI library itself, you can run our component workbench locally using Storybook.
 
-Run the following command in your terminal to create a new project with Bodewell UI and all necessary configurations already set up:
+**1. Install Dependencies:**
+First, clone this repository and install the required dependencies using `pnpm`.
 
 ```bash
-npm create bodewell-app@latest
+pnpm install
 ```
 
+**2. Run Storybook:**
+Next, run the Storybook command. This will start a local development server and open a new browser tab where you can view, test, and interact with all of the library's components in isolation.
+
+```bash
+pnpm run storybook
+```
+
+---
+
 ## Basic Usage
+
 Here's a simple example of how to use a Bodewell UI component in your project:
 
-``` javascript
+```tsx
 import React from 'react';
 import { Button, Card, PageHeader } from '@bodewell/ui';
 
@@ -50,19 +65,27 @@ function MyAwesomePage() {
   );
 }
 
-
 export default MyAwesomePage;
 ```
 
+---
+
 ## The Bodewell Ecosystem
 
-The Bodewell project is an integrated framework architected across three separate repositories:
+The Bodewell project is an integrated framework architected across three separate repositories to create a seamless experience from concept to creation.
 
-* @bodewell/ui (This Repository): A public, open-source component library distributed as an NPM package.
+* **`@bodewell/ui`** (This Repository): A public, open-source component library distributed as an NPM package. This is the visual foundation of the ecosystem.
 
-* bodewell-app-starter: A public, open-source starter-kit application that provides the ideal local environment for building with Bodewell.
+* **`bodewell-app-starter`**: A public, open-source starter kit that provides the ideal local environment for building with Bodewell UI.
 
-* bodewell-app-builder: A hosted SaaS application featuring our AI Prototyping Assistant, which guides users through the strategic A.D.A.P.T. Framework to build applications from a solid strategic foundation.
+* **`bodewell-app-builder`**: A private, hosted SaaS application featuring our AI Prototyping Assistant. It guides users through the strategic A.D.A.P.T. Framework to build applications from a solid strategic foundation.
 
-# License
+---
+
+## Contributing
+
+We welcome contributions from the community! If you'd like to contribute, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
 This project is licensed under the MIT License.
