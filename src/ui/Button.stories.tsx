@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button';
+import { Icon } from './Icon';
 
 const meta = {
   title: 'UI/Button',
@@ -11,7 +12,15 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'danger', 'outline', 'secondary', 'ghost', 'link'],
+      options: [
+        'primary',
+        'danger',
+        'outline',
+        'secondary',
+        'ghost',
+        'link',
+        'accent',
+      ],
     },
     size: {
       control: 'select',
@@ -25,6 +34,11 @@ const meta = {
     },
     iconLeft: { control: 'text' },
     iconRight: { control: 'text' },
+    asChild: {
+      control: 'boolean',
+      description:
+        'Render the component as its child element (e.g., for <Link> or <a>)',
+    },
   },
 } satisfies Meta<typeof Button>;
 
@@ -61,10 +75,33 @@ export const Loading: Story = {
   },
 };
 
+// --- THIS IS THE FIX ---
+// We now pass the <Icon> component as `children`
+// and remove the `iconLeft` prop.
 export const IconOnly: Story = {
   args: {
     variant: 'ghost',
     size: 'icon',
-    iconLeft: 'settings',
+    children: <Icon name="settings" />, // <-- Pass icon as children
+    // iconLeft: 'settings', // <-- Remove this
+  },
+};
+
+export const PolymorphicLink: Story = {
+  name: 'Polymorphic (as Link)',
+  args: {
+    variant: 'outline',
+    asChild: true,
+    children: (
+      <a
+        href="https://google.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center"
+      >
+        <Icon name="external-link" className="mr-2" />
+        Open Google
+      </a>
+    ),
   },
 };
