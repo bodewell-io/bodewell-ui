@@ -175,39 +175,45 @@ export const SidebarMenuItem = React.forwardRef<
       href: href,
     };
 
+    // --- MODIFICATION ---
+    // Define states clearly
+    const baseStyles = 'group flex flex-nowrap items-center h-8 px-2 rounded-md transition-colors duration-200 cursor-pointer';
+    const defaultStateStyles = 'text-muted-foreground hover:bg-primary/10 ';
+    const activeStateStyles = 'bg-primary/20 '; // No hover
+    const collapsedStyles = !isOpen && 'w-10 justify-center px-0';
+    // --- END MODIFICATION ---
+
     if (typeof Component === 'string') {
+      const isActuallyActive = isActive;
       componentProps.className = cn(
-        // --- MODIFICATION ---
-        'group flex flex-nowrap items-center h-8 px-3 rounded-md transition-colors duration-200', // h-10 -> h-8
-        'text-muted-foreground hover:bg-muted hover:text-foreground',
-        isActive && 'bg-primary/10 text-primary hover:bg-primary/20',
-        !isOpen && 'w-10 justify-center', // Collapsed width
+        baseStyles,
+        isActuallyActive ? activeStateStyles : defaultStateStyles,
+        // No conditional hover needed, it's built into defaultStateStyles
+        collapsedStyles,
         className,
       );
     } else {
       componentProps.className = ({
         isActive: isNavLinkActive,
-      }: { isActive?: boolean } = {}) =>
-        cn(
-          // --- MODIFICATION ---
-          'group flex flex-nowrap items-center h-8 px-3 rounded-md transition-colors duration-200', // h-10 -> h-8
-          'text-muted-foreground hover:bg-muted hover:text-foreground',
-          (isActive || isNavLinkActive) &&
-            'bg-primary/10 text-primary hover:bg-primary/20',
-          !isOpen && 'w-10 justify-center', // Collapsed width
+      }: { isActive?: boolean } = {}) => {
+        const isActuallyActive = isActive || isNavLinkActive;
+        return cn(
+          baseStyles,
+          isActuallyActive ? activeStateStyles : defaultStateStyles,
+          // No conditional hover needed, it's built into defaultStateStyles
+          collapsedStyles,
           className,
         );
+      };
     }
 
     const content = (
       <Component {...componentProps}>
         {icon && (
-          // --- MODIFICATION ---
-          // Added [&_svg]:w-4 [&_svg]:h-4 to force icon size to 16x16
           <div
             className={cn(
               'transition-all flex-shrink-0 [&_svg]:w-4 [&_svg]:h-4',
-              isOpen && 'mr-3',
+              isOpen && 'mr-2',
             )}
           >
             {icon}
@@ -215,8 +221,7 @@ export const SidebarMenuItem = React.forwardRef<
         )}
         <span
           className={cn(
-            // --- MODIFICATION ---
-            'text-sm flex-1 whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-200', // Added text-sm
+            'text-sm flex-1 whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-200',
             !isOpen && 'opacity-0 w-0',
           )}
         >

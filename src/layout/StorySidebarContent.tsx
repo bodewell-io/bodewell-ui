@@ -1,4 +1,5 @@
 // bodewell-ui/src/layout/StorySidebarContent.tsx
+import React from 'react'; // Added React import
 import { cn } from '../utils/cn';
 import { useSidebar } from './Sidebar';
 import {
@@ -29,7 +30,6 @@ export const StorySidebarContent = () => {
     <>
       <SidebarHeader>
         <div className="flex items-center justify-between w-full">
-          {/* We hide the "Bodewell" text when the sidebar is closed */}
           <span
             className={cn(
               'text-xl font-bold transition-opacity duration-200',
@@ -38,17 +38,18 @@ export const StorySidebarContent = () => {
           >
             Bodewell
           </span>
-          {/* This toggle button is part of the header content now */}
           <Button
             variant="ghost"
             size="icon"
             onClick={toggle}
-            className="hidden md:flex" // Only show on desktop
+            className="hidden md:flex"
+            aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
             <Icon name={isOpen ? 'panel-left-close' : 'panel-left-open'} />
           </Button>
         </div>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
@@ -57,11 +58,13 @@ export const StorySidebarContent = () => {
                 key={item.label}
                 icon={<Icon name={item.icon} />}
                 tooltip={item.label}
-                // Use the 'as' prop for a non-interactive div, since these aren't links
-                as="div" 
+                as="div"
                 badge={
                   item.badge && <Badge variant="primary">{item.badge}</Badge>
                 }
+                // --- MODIFICATION ---
+                // We'll force the "Data Grid" item to be active
+                isActive={item.label === 'Data Grid'}
               >
                 {item.label}
               </SidebarMenuItem>
@@ -69,11 +72,12 @@ export const StorySidebarContent = () => {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter>
         <div className="flex items-center gap-3">
           <Avatar
             src="https://avatars.githubusercontent.com/u/124599?v=4"
-            name="Dane Troup" // Using 'name' for fallback/tooltip
+            name="Dane Troup"
           />
           <div
             className={cn(
