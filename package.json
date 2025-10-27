@@ -24,6 +24,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "prepare": "pnpm run build",
     "generate:manifest": "node scripts/generate-manifest.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

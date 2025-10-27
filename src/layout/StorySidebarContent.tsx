@@ -1,3 +1,4 @@
+// bodewell-ui/src/layout/StorySidebarContent.tsx
 import { cn } from '../utils/cn';
 import { useSidebar } from './Sidebar';
 import {
@@ -28,9 +29,23 @@ export const StorySidebarContent = () => {
     <>
       <SidebarHeader>
         <div className="flex items-center justify-between w-full">
-          <span className={cn('text-xl font-bold', !isOpen && 'hidden')}>Bodewell</span>
-          <Button variant="ghost" size="icon" onClick={toggle} className="hidden md:flex">
-            <Icon name="panel-left-close" />
+          {/* We hide the "Bodewell" text when the sidebar is closed */}
+          <span
+            className={cn(
+              'text-xl font-bold transition-opacity duration-200',
+              !isOpen && 'opacity-0 w-0',
+            )}
+          >
+            Bodewell
+          </span>
+          {/* This toggle button is part of the header content now */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggle}
+            className="hidden md:flex" // Only show on desktop
+          >
+            <Icon name={isOpen ? 'panel-left-close' : 'panel-left-open'} />
           </Button>
         </div>
       </SidebarHeader>
@@ -42,7 +57,11 @@ export const StorySidebarContent = () => {
                 key={item.label}
                 icon={<Icon name={item.icon} />}
                 tooltip={item.label}
-                badge={item.badge && <Badge variant="primary">{item.badge}</Badge>}
+                // Use the 'as' prop for a non-interactive div, since these aren't links
+                as="div" 
+                badge={
+                  item.badge && <Badge variant="primary">{item.badge}</Badge>
+                }
               >
                 {item.label}
               </SidebarMenuItem>
@@ -52,14 +71,20 @@ export const StorySidebarContent = () => {
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center gap-3">
-          {/* CORRECTED USAGE: Pass the 'name' prop */}
           <Avatar
             src="https://avatars.githubusercontent.com/u/124599?v=4"
-            name="Dane Troup"
+            name="Dane Troup" // Using 'name' for fallback/tooltip
           />
-          <div className={cn(!isOpen && 'hidden')}>
+          <div
+            className={cn(
+              'flex-1 whitespace-nowrap overflow-hidden transition-opacity duration-200',
+              !isOpen && 'opacity-0 w-0',
+            )}
+          >
             <p className="font-semibold text-sm">Dane Troup</p>
-            <p className="text-xs text-muted-foreground">danetroup@gmail.com</p>
+            <p className="text-xs text-muted-foreground">
+              danetroup@gmail.com
+            </p>
           </div>
         </div>
       </SidebarFooter>
