@@ -1,5 +1,4 @@
 // bodewell-ui/src/layout/StorySidebarContent.tsx
-import React from 'react'; // Added React import
 import { cn } from '../utils/cn';
 import { useSidebar } from './Sidebar';
 import {
