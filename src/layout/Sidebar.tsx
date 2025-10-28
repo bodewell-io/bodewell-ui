@@ -147,7 +147,8 @@ interface SidebarMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   tooltip?: string;
   href?: string;
   isActive?: boolean;
-  as?: React.ElementType; // <-- THE NEW PROP
+  as?: React.ElementType;
+  end?: boolean; // <-- FIX 1: Add 'end' prop to the interface
 }
 
 export const SidebarMenuItem = React.forwardRef<
@@ -164,6 +165,7 @@ export const SidebarMenuItem = React.forwardRef<
       href = '#',
       isActive,
       as: Component = 'a',
+      end, // <-- FIX 2: Destructure 'end' from props
       ...props
     },
     ref,
@@ -173,22 +175,24 @@ export const SidebarMenuItem = React.forwardRef<
     const componentProps: any = {
       to: href,
       href: href,
+      end: end, // <-- FIX 2: Pass 'end' to the component
     };
 
-    // --- MODIFICATION ---
+    // --- YOUR CHANGES ---
     // Define states clearly
-    const baseStyles = 'group flex flex-nowrap items-center h-8 px-2 rounded-md transition-colors duration-200 cursor-pointer';
-    const defaultStateStyles = 'text-muted-foreground hover:bg-primary/10 ';
-    const activeStateStyles = 'bg-primary/20 '; // No hover
+    const baseStyles =
+      'group flex flex-nowrap items-center h-8 px-2 rounded-md transition-colors duration-200 cursor-pointer';
+    const defaultStateStyles = 'text-muted-foreground hover:bg-primary/10';
+    const activeStateStyles = 'bg-primary/20 text-primary';
+
     const collapsedStyles = !isOpen && 'w-10 justify-center px-0';
-    // --- END MODIFICATION ---
+    // --- END CHANGES ---
 
     if (typeof Component === 'string') {
       const isActuallyActive = isActive;
       componentProps.className = cn(
         baseStyles,
         isActuallyActive ? activeStateStyles : defaultStateStyles,
-        // No conditional hover needed, it's built into defaultStateStyles
         collapsedStyles,
         className,
       );
@@ -200,7 +204,6 @@ export const SidebarMenuItem = React.forwardRef<
         return cn(
           baseStyles,
           isActuallyActive ? activeStateStyles : defaultStateStyles,
-          // No conditional hover needed, it's built into defaultStateStyles
           collapsedStyles,
           className,
         );
