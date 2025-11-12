@@ -9,18 +9,24 @@ export interface LineChartProps {
   data: any[];
   dataKeyX: string;
   lineKeys: string[];
+  [key: string]: any; // <-- 1. ADD THIS "catch-all" prop
 }
 
 /**
  * @wizard
  * @name LineChart
- * @description A theme-aware line chart component powered by Recharts, for visualizing trends over time or categories.
+ * @description A theme-aware line chart component powered by Recharts...
  * @tags charts, data-visualization, rechart
  * @category charts
  */
 
 
-export const LineChart: React.FC<LineChartProps> = ({ data, dataKeyX, lineKeys }) => {
+export const LineChart: React.FC<LineChartProps> = ({ 
+  data, 
+  dataKeyX, 
+  lineKeys, 
+  ...restOfProps // <-- 2. GATHER all other props (like dot, connectNulls)
+}) => {
   const { textColor, gridColor, tooltipBg, palette } = useChartTheme();
 
   return (
@@ -36,7 +42,15 @@ export const LineChart: React.FC<LineChartProps> = ({ data, dataKeyX, lineKeys }
         />
         <Legend wrapperStyle={{ color: textColor }} />
         {lineKeys.map((key, index) => (
-          <Line key={key} type="monotone" dataKey={key} stroke={palette[index % palette.length]} strokeWidth={2} activeDot={{ r: 8 }} />
+          <Line 
+            key={key} 
+            type="monotone" 
+            dataKey={key} 
+            stroke={palette[index % palette.length]} 
+            strokeWidth={2} 
+            activeDot={{ r: 8 }} 
+            {...restOfProps} // <-- 3. PASS all extra props here
+          />
         ))}
       </RechartsLineChart>
     </ResponsiveContainer>

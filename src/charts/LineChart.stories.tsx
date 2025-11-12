@@ -24,6 +24,9 @@ const userData = [
     { month: 'Apr', newUsers: 210, returningUsers: 140 },
     { month: 'May', newUsers: 250, returningUsers: 190 },
     { month: 'Jun', newUsers: 220, returningUsers: 210 },
+    // --- ADDED THIS TO TEST connectNulls ---
+    { month: 'Jul', newUsers: 260, returningUsers: null }, 
+    { month: 'Aug', newUsers: 290, returningUsers: 250 },
 ];
 
 export const Default: Story = {
@@ -31,5 +34,21 @@ export const Default: Story = {
     data: userData,
     dataKeyX: 'month',
     lineKeys: ['newUsers', 'returningUsers'],
+  },
+};
+
+// ---
+// ✅ ADD THIS NEW STORY TO TEST OUR FIX
+// ---
+export const LinesWithoutDots: Story = {
+  args: {
+    data: userData,
+    dataKeyX: 'month',
+    lineKeys: ['newUsers', 'returningUsers'],
+    
+    // These props will now be passed to Recharts
+    // thanks to our "...restOfProps" fix
+    dot: false,
+    connectNulls: true,
   },
 };
