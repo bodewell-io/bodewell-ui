@@ -1,87 +1,80 @@
-// packages/ui/src/charts/LineChart.tsx
-"use client";
+import type { Meta, StoryObj } from '@storybook/react';
+import { LineChart } from './LineChart';
+import { Card } from '../layout/Card';
 
-import React from 'react';
-import { 
-  LineChart as RechartsLineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer,
-  XAxisProps,
-  YAxisProps // <-- 1. Import YAxisProps
-} from 'recharts';
-import { useChartTheme } from '../hooks/useChartTheme';
+const meta: Meta<typeof LineChart> = {
+  title: 'Charts/LineChart',
+  component: LineChart,
+  decorators: [
+    (Story) => (
+      <Card className="p-6 w-[700px] h-[400px]">
+        <Story />
+      </Card>
+    ),
+  ],
+};
 
-export interface LineChartProps {
-  data: any[];
-  dataKeyX: string;
-  lineKeys: string[];
-  xAxisProps?: XAxisProps;
-  yAxisProps?: YAxisProps; // <-- 2. Add prop for Y-axis rules
-  [key: string]: any; 
-}
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-/**
- * @wizard
- * @name LineChart
- * @description A theme-aware line chart component...
- */
-export const LineChart: React.FC<LineChartProps> = ({ 
-  data, 
-  dataKeyX, 
-  lineKeys, 
-  xAxisProps, 
-  yAxisProps, // <-- 3. Get the new prop
-  ...restOfProps 
-}) => {
-  const { textColor, gridColor, tooltipBg, palette } = useChartTheme();
+// --- 1. UPDATED THE DATA ---
+// Added a numeric timestamp and null values
+const userData = [
+    { timestamp: 1762960500, newUsers: 120, returningUsers: 80 },
+    { timestamp: 1762964100, newUsers: 150, returningUsers: 110 },
+    { timestamp: 1762967700, newUsers: 130, returningUsers: 160 },
+    { timestamp: 1762971300, newUsers: 210, returningUsers: 140 },
+    { timestamp: 1762974900, newUsers: 250, returningUsers: 190 },
+    { timestamp: 1762978500, newUsers: 220, returningUsers: 210 },
+    { timestamp: 1762982100, newUsers: 260, returningUsers: null }, // Test connectNulls
+    { timestamp: 1762985700, newUsers: 290, returningUsers: 250 },
+];
 
-  // --- 4. ADD "NO DATA" STATE ---
-  if (!data || data.length === 0) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <p className="text-sm text-muted-foreground">No data to display</p>
-      </div>
-    );
-  }
+export const Default: Story = {
+  args: {
+    data: userData,
+    dataKeyX: 'timestamp', // Using the numeric key
+    lineKeys: ['newUsers', 'returningUsers'],
+  },
+};
 
-  return (
-    <ResponsiveContainer width="100%" height="100%">
-      <RechartsLineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-        <XAxis 
-          dataKey={dataKeyX} 
-          stroke={textColor} 
-          tick={{ fill: textColor }}
-          {...xAxisProps} 
-        />
-        <YAxis 
-          stroke={textColor} 
-          tick={{ fill: textColor }}
-          {...yAxisProps} // <-- 5. SPREAD the new rules here
-        />
-        <Tooltip
-          contentStyle={{ backgroundColor: tooltipBg, borderColor: gridColor, borderRadius: '0.5rem' }}
-          itemStyle={{ color: textColor }}
-          labelStyle={{ color: textColor, fontWeight: 'bold' }}
-        />
-        <Legend wrapperStyle={{ color: textColor }} />
-        {lineKeys.map((key, index) => (
-          <Line 
-            key={key} 
-            type="monotone" 
-            dataKey={key} 
-            stroke={palette[index % palette.length]} 
-            strokeWidth={2} 
-            activeDot={{ r: 8 }} 
-            {...restOfProps} // Pass dot, connectNulls
-          />
-        ))}
-      </RechartsLineChart>
-    </ResponsiveContainer>
-  );
+// --- 2. ADDED A NEW "FIXED" STORY ---
+export const LinesWithCustomAxis: Story = {
+  args: {
+    data: userData,
+    dataKeyX: 'timestamp',
+    lineKeys: ['newUsers', 'returningUsers'],
+    
+    // --- Test our "Moat" props ---
+    dot: false,
+    connectNulls: true,
+
+    // --- Test our new xAxisProps (THE FIX) ---
+    xAxisProps: {
+      type: 'number',
+      domain: ['dataMin', 'dataMax'],
+      // This is the formatter that fixes the "wonky" numbers
+      tickFormatter: (timestamp: number) => 
+        new Date(timestamp * 1000).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      interval: 'preserveStartEnd',
+    },
+
+    // --- Test our new yAxisProps ---
+    yAxisProps: {
+      domain: [0, 300], // Lock the Y-axis
+      tickFormatter: (value: number) => `$${value}`, // Add a $ prefix
+    },
+  },
+};
+
+// --- 3. ADDED A STORY FOR THE "NO DATA" STATE ---
+export const Empty: Story = {
+  args: {
+    data: [], // Pass empty data
+    dataKeyX: 'timestamp',
+    lineKeys: ['newUsers', 'returningUsers'],
+  },
 };

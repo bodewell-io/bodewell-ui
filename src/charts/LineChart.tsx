@@ -2,39 +2,68 @@
 "use client";
 
 import React from 'react';
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { 
+  LineChart as RechartsLineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer,
+  XAxisProps, // <-- 1. Import XAxisProps
+  YAxisProps  // <-- 2. Import YAxisProps
+} from 'recharts';
 import { useChartTheme } from '../hooks/useChartTheme';
 
 export interface LineChartProps {
   data: any[];
   dataKeyX: string;
   lineKeys: string[];
-  [key: string]: any; // <-- 1. ADD THIS "catch-all" prop
+  xAxisProps?: XAxisProps; // <-- 3. Add prop for X-axis rules
+  yAxisProps?: YAxisProps; // <-- 4. Add prop for Y-axis rules
+  [key: string]: any; // <-- 5. "catch-all" for dot, connectNulls
 }
 
 /**
  * @wizard
  * @name LineChart
- * @description A theme-aware line chart component powered by Recharts...
- * @tags charts, data-visualization, rechart
- * @category charts
+ * @description A theme-aware line chart component...
  */
-
-
 export const LineChart: React.FC<LineChartProps> = ({ 
   data, 
   dataKeyX, 
   lineKeys, 
-  ...restOfProps // <-- 2. GATHER all other props (like dot, connectNulls)
+  xAxisProps, // <-- 6. Get the new props
+  yAxisProps,
+  ...restOfProps // <-- 7. Get the rest (dot, connectNulls)
 }) => {
   const { textColor, gridColor, tooltipBg, palette } = useChartTheme();
+
+  // Add a "No Data" state
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <p className="text-sm text-muted-foreground">No data to display</p>
+      </div>
+    );
+  }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <RechartsLineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-        <XAxis dataKey={dataKeyX} stroke={textColor} tick={{ fill: textColor }} />
-        <YAxis stroke={textColor} tick={{ fill: textColor }} />
+        <XAxis 
+          dataKey={dataKeyX} 
+          stroke={textColor} 
+          tick={{ fill: textColor }}
+          {...xAxisProps} // <-- 8. SPREAD the X-axis rules here
+        />
+        <YAxis 
+          stroke={textColor} 
+          tick={{ fill: textColor }}
+          {...yAxisProps} // <-- 9. SPREAD the Y-axis rules here
+        />
         <Tooltip
           contentStyle={{ backgroundColor: tooltipBg, borderColor: gridColor, borderRadius: '0.5rem' }}
           itemStyle={{ color: textColor }}
@@ -49,7 +78,7 @@ export const LineChart: React.FC<LineChartProps> = ({
             stroke={palette[index % palette.length]} 
             strokeWidth={2} 
             activeDot={{ r: 8 }} 
-            {...restOfProps} // <-- 3. PASS all extra props here
+            {...restOfProps} // <-- 10. SPREAD the rest (dot, connectNulls) here
           />
         ))}
       </RechartsLineChart>
