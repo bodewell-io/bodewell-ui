@@ -1,4 +1,4 @@
-// bodewell-ui/src/layout/Sidebar.tsx
+// packages/ui/src/layout/Sidebar.tsx
 import React, {
   createContext,
   useContext,
@@ -6,7 +6,7 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+// We are removing 'cva' as it's not needed for this logic
 import { Button } from '../ui/Button';
 import { Icon } from '../ui/Icon';
 import { TippyTooltip } from '../feedback/TippyTooltip';
@@ -30,7 +30,9 @@ export const useSidebar = () => {
 };
 
 export const SidebarProvider = ({ children }: { children: ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  // --- ✅ 1. THE FIX ---
+  // Default to 'false' (closed) for a mobile-first experience.
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
 
   React.useEffect(() => {
@@ -53,38 +55,48 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
 };
 
 // --- Main Sidebar Component ---
-const sidebarVariants = cva(
-  'h-screen flex flex-col border-r border-border bg-card text-foreground transition-all duration-300 ease-in-out',
-  {
-    variants: {
-      isOpen: { true: 'w-64', false: 'w-16' },
-    },
-    defaultVariants: { isOpen: true },
-  },
-);
-
+// We no longer use cva or VariantProps here
 /**
  * @wizard
- * @description A collapsible sidebar component for application navigation.
+ * @description A collapsible, responsive sidebar component.
  * @props
- * @prop {React.ReactNode} children - The content of the sidebar (Header, Content, Footer).
+ * @prop {React.ReactNode} children - The content of the sidebar.
  */
 export const Sidebar = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof sidebarVariants>
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const { isOpen } = useSidebar();
+  
   return (
     <aside
       ref={ref}
-      className={cn(sidebarVariants({ isOpen, className }))}
+      // --- ✅ 2. THE MAIN FIX ---
+      // This is the new responsive logic that replaces 'sidebarVariants'
+      className={cn(
+        // Base styles
+        'h-screen flex flex-col border-r border-border bg-card text-foreground transition-all duration-300 ease-in-out',
+        
+        // Mobile (Default): Fixed, off-screen
+        'fixed inset-y-0 left-0 z-50 w-72', // 'w-72' is the width when open
+        isOpen ? 'translate-x-0' : '-translate-x-full',
+
+        // Desktop (Breakpoint: md:)
+        'md:sticky md:translate-x-0', // Becomes sticky and visible on desktop
+        isOpen ? 'md:w-64' : 'md:w-16', // The desktop-only collapse
+        
+        className,
+      )}
       {...props}
     />
   );
 });
 Sidebar.displayName = 'Sidebar';
 
-// --- Structural Sub-Components ---
+// --- (All Sub-Components: Header, Content, Footer, Menu, MenuItem) ---
+// No changes are needed for any of the other components.
+// Your 'SidebarMenuItem' and 'SidebarTrigger' are already perfect.
+
 export const SidebarHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -148,7 +160,7 @@ interface SidebarMenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   href?: string;
   isActive?: boolean;
   as?: React.ElementType;
-  end?: boolean; // <-- FIX 1: Add 'end' prop to the interface
+  end?: boolean;
 }
 
 export const SidebarMenuItem = React.forwardRef<
@@ -165,7 +177,7 @@ export const SidebarMenuItem = React.forwardRef<
       href = '#',
       isActive,
       as: Component = 'a',
-      end, // <-- FIX 2: Destructure 'end' from props
+      end, 
       ...props
     },
     ref,
@@ -175,18 +187,15 @@ export const SidebarMenuItem = React.forwardRef<
     const componentProps: any = {
       to: href,
       href: href,
-      end: end, // <-- FIX 2: Pass 'end' to the component
+      end: end,
     };
 
-    // --- YOUR CHANGES ---
-    // Define states clearly
     const baseStyles =
       'group flex flex-nowrap items-center h-8 px-2 rounded-md transition-colors duration-200 cursor-pointer';
     const defaultStateStyles = 'text-muted-foreground hover:bg-primary/10';
     const activeStateStyles = 'bg-primary/20 text-primary';
 
     const collapsedStyles = !isOpen && 'w-10 justify-center px-0';
-    // --- END CHANGES ---
 
     if (typeof Component === 'string') {
       const isActuallyActive = isActive;
